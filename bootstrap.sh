@@ -30,12 +30,13 @@ function prompt() {
 }
 
 function op_signin() {
-    if [ ! -f $HOME/.op/config ]; then
-        local sign_in_address
-        local email_address
-        local secret_key
+    local sign_in_address
+    local email_address
+    local secret_key
 
-        info "Signing in to 1Password account ..."
+    info "Sign into 1Password account ..."
+
+    if [ ! -f $HOME/.op/config ]; then
         read -p "Enter the sign in address [my.1password.com]: " sign_in_address
         sign_in_address=${sign_in_address:-my.1password.com}
         read -p "Enter the email address: " email_address
@@ -44,7 +45,8 @@ function op_signin() {
     fi
 
     if ! op list users >/dev/null 2>&1; then
-        eval "$(op signin my)"
+        sign_in_address=$(cat $HOME/.op/config | jq -r '.accounts|.[0].shorthand')
+        eval $(op signin $sign_in_address)
     fi
 }
 
