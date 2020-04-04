@@ -34,7 +34,7 @@ function op_signin() {
     local email_address
     local secret_key
 
-    info "Sign into 1Password account ..."
+    info "Signing into 1Password..."
 
     if [ ! -f $HOME/.op/config ]; then
         read -p "Enter the sign in address [my.1password.com]: " sign_in_address
@@ -46,39 +46,31 @@ function op_signin() {
 
     if ! op list users >/dev/null 2>&1; then
         sign_in_address=$(cat $HOME/.op/config | jq -r '.accounts|.[0].shorthand')
-        eval $(op signin $sign_in_address)
+        eval "$(op signin $sign_in_address)"
     fi
 }
 
 function bootstrap() {
 
-    info "Checking for Xcode command line tools"
     if ! xcode-select -p &> /dev/null; then
         info "Installing Xcode command line tools..."
         xcode-select --install
     fi
-    success "Xcode command line tools installed"
 
-    info "Checking for Homebrew"
     if ! type brew &> /dev/null; then
         info "Installing Homebrew..."
         curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
     fi
-    success "Homebrew installed"
 
-    info "Checking for jq"
     if [ ! -x /usr/local/bin/jq ]; then
         info "Installing jq..."
         brew install jq
     fi
-    success "jq installed"
 
-    info "Checking for 1Password CLI"
     if [ ! -x /usr/local/bin/op ]; then
         info "Installing 1Password command-line tool..."
         brew cask install 1password-cli
     fi
-    success "1Password command-line tool installed"
 
     op_signin
 
