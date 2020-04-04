@@ -64,6 +64,13 @@ function bootstrap() {
     fi
     success "Homebrew installed"
 
+    info "Checking for jq"
+    if [ ! -x /usr/local/bin/jq ]; then
+        info "Installing jq..."
+        brew install jq
+    fi
+    success "jq installed"
+
     info "Checking for 1Password CLI"
     if [ ! -x /usr/local/bin/op ]; then
         info "Installing 1Password command-line tool..."
