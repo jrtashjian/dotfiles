@@ -69,6 +69,8 @@ function op_get_ssh_keys() {
         .[].uuid
     ')
 
+    eval "$(ssh-agent -s)"
+
     for uuid in $ssh_key_items; do
         local item=$(op get item ${uuid})
         local fileName=$(echo ${item} | jq -r '.details.documentAttributes.fileName')
@@ -84,7 +86,13 @@ function op_get_ssh_keys() {
 
         # Setup ssh-agent for private keys with a passphrase.
         if [ "$passphrase" != "null" ]; then
-            echo "\$passphrase is NOT empty"
+            local passphrase_esc=$(printf '%q' "$passphrase")
+            expect -c "
+                spawn ssh-add -K $HOME/.ssh/$fileName
+                expect \"Enter passphrase*\" {
+                    send \"$passphrase_esc\r\"
+                    exp_continue
+                }"
         fi
     done
 }
