@@ -140,3 +140,9 @@ function main() {
 }
 
 main "$@"
+
+source ./brew.sh
+source ./brew-cask.sh
+
+# Cleanup
+brew cleanup
