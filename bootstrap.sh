@@ -50,6 +50,39 @@ function op_signin() {
     fi
 }
 
+function op_get_ssh_keys() {
+    local ssh_key_items
+
+    if [ ! -d "$HOME/.ssh" ]; then
+        mkdir -p "$HOME/.ssh"
+        chmod 700 "$HOME/.ssh"
+    fi
+
+    info "Retrieving SSH keys from 1Password..."
+
+    ssh_key_items=$(op list items | jq --compact-output -r '
+        map( select( .overview.tags[]? | contains("ssh-key") ) ) |
+        .[].uuid
+    ')
+
+    for uuid in $ssh_key_items; do
+        local item=$(op get item ${uuid})
+        local fileName=$(echo ${item} | jq -r '.details.documentAttributes.fileName')
+        local fileData=$(op get document ${uuid})
+        local passphrase=$(echo ${item} | jq -r '.details.sections | map(select(.fields[]?)) | .[0].fields[0].v?')
+
+        if [ ! -f "$HOME/.ssh/$fileName" ]; then
+            info "Adding SSH key: $fileName"
+            op get document ${uuid} > "$HOME/.ssh/$fileName"
+            chmod 600 "$HOME/.ssh/$fileName"
+        fi
+
+        if [ "$passphrase" != "null" ]; then
+            echo "\$passphrase is NOT empty"
+        fi
+    done
+}
+
 function bootstrap() {
 
     if ! xcode-select -p &> /dev/null; then
@@ -73,6 +106,7 @@ function bootstrap() {
     fi
 
     op_signin
+    op_get_ssh_keys
 
     if [ ! -d  $DEST ]; then
         info "Cloning repository..."
