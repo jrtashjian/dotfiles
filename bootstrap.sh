@@ -36,6 +36,7 @@ function op_signin() {
 
     info "Signing into 1Password..."
 
+    # Log into 1Password if we haven't.
     if [ ! -f $HOME/.op/config ]; then
         read -p "Enter the sign in address [my.1password.com]: " sign_in_address
         sign_in_address=${sign_in_address:-my.1password.com}
@@ -44,6 +45,7 @@ function op_signin() {
         eval "$(op signin $sign_in_address $email_address $secret_key)"
     fi
 
+    # Refresh the login token.
     if ! op list users >/dev/null 2>&1; then
         sign_in_address=$(cat $HOME/.op/config | jq -r '.accounts|.[0].shorthand')
         eval "$(op signin $sign_in_address)"
@@ -53,6 +55,7 @@ function op_signin() {
 function op_get_ssh_keys() {
     local ssh_key_items
 
+    # Create the .ssh directory if it doesn't exist.
     if [ ! -d "$HOME/.ssh" ]; then
         mkdir -p "$HOME/.ssh"
         chmod 700 "$HOME/.ssh"
@@ -60,6 +63,7 @@ function op_get_ssh_keys() {
 
     info "Retrieving SSH keys from 1Password..."
 
+    # Get all items tagged "ssh-key" from 1Password.
     ssh_key_items=$(op list items | jq --compact-output -r '
         map( select( .overview.tags[]? | contains("ssh-key") ) ) |
         .[].uuid
@@ -71,12 +75,14 @@ function op_get_ssh_keys() {
         local fileData=$(op get document ${uuid})
         local passphrase=$(echo ${item} | jq -r '.details.sections | map(select(.fields[]?)) | .[0].fields[0].v?')
 
+        # Save the SSH key into the ~/.ssh directory.
         if [ ! -f "$HOME/.ssh/$fileName" ]; then
             info "Adding SSH key: $fileName"
             op get document ${uuid} > "$HOME/.ssh/$fileName"
             chmod 600 "$HOME/.ssh/$fileName"
         fi
 
+        # Setup ssh-agent for private keys with a passphrase.
         if [ "$passphrase" != "null" ]; then
             echo "\$passphrase is NOT empty"
         fi
