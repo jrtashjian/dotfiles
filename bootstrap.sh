@@ -146,3 +146,8 @@ source ./brew-cask.sh
 
 # Cleanup
 brew cleanup
+
+# Vim Setup
+git clone https://github.com/preservim/nerdtree.git $HOME/.vim/pack/vendor/start/nerdtree
+vim -u NONE -c "helptags $HOME/.vim/pack/vendor/start/nerdtree/doc" -c q
+ln -s $PWD/.vimrc $HOME/.vimrc
