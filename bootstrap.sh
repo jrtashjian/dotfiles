@@ -151,3 +151,7 @@ brew cleanup
 git clone https://github.com/preservim/nerdtree.git $HOME/.vim/pack/vendor/start/nerdtree
 vim -u NONE -c "helptags $HOME/.vim/pack/vendor/start/nerdtree/doc" -c q
 ln -s $PWD/.vimrc $HOME/.vimrc
+
+# Zsh Setup
+wget -O $ZSH_CUSTOM/themes/common.zsh-theme https://raw.githubusercontent.com/jackharrisonsherlock/common/master/common.zsh-theme
+ln -s $PWD/.zshrc $HOME/.zshrc
