@@ -24,4 +24,16 @@ vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- indenting
+vim.o.expandtab = true
+vim.o.shiftwidth = 4
+vim.o.smartindent = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+
+-- numbers
+vim.o.number = true
+vim.o.numberwidth = 2
+vim.o.ruler = false
+
 require("lazy").setup("plugins")
