@@ -44,3 +44,17 @@ for dir in "$DOTFILES_PATH/config"/*/; do
         create_symlink "$target" "$source"
     fi
 done
+
+# Define files to copy if they don't exist (source:target)
+files_to_copy=(
+    "$DOTFILES_PATH/config/git/.gitconfig.local.example:$HOME/.gitconfig.local"
+)
+
+# Copy each file if target doesn't exist
+for pair in "${files_to_copy[@]}"; do
+    IFS=':' read -r source target <<< "$pair"
+    if [ ! -f "$target" ]; then
+        cp "$source" "$target"
+        echo "Copied $(basename "$source") to $target"
+    fi
+done
