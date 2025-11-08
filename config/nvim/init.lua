@@ -38,6 +38,7 @@ vim.o.cursorline = true       -- Highlight current line
 vim.o.signcolumn = "yes"      -- Always show sign column
 vim.o.splitbelow = true       -- New splits below
 vim.o.splitright = true       -- New splits right
+vim.o.wrap = false            -- Disable line wrapping
 
 -- Indenting
 vim.o.expandtab = true        -- Use spaces instead of tabs
