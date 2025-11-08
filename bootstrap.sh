@@ -29,6 +29,18 @@ create_symlink() {
     fi
 }
 
+# Helper function to parse source:target pair and return requested part
+parse_pair() {
+    local pair="$1"
+    local part="$2"
+    IFS=':' read -r source target <<< "$pair"
+    case "$part" in
+        source) echo "$source" ;;
+        target) echo "$target" ;;
+        *) echo "Invalid part: $part" >&2; return 1 ;;
+    esac
+}
+
 # Ensure config directory exists
 if [ ! -d "$DOTFILES_PATH/config" ]; then
     echo "Error: $DOTFILES_PATH/config does not exist."
@@ -52,7 +64,8 @@ files_to_copy=(
 
 # Copy each file if target doesn't exist
 for pair in "${files_to_copy[@]}"; do
-    IFS=':' read -r source target <<< "$pair"
+    source=$(parse_pair "$pair" "source")
+    target=$(parse_pair "$pair" "target")
     if [ ! -f "$target" ]; then
         cp "$source" "$target"
         echo "Copied $(basename "$source") to $target"
