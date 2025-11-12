@@ -1,15 +1,15 @@
 return {
-	"nvim-neo-tree/neo-tree.nvim",
-	branch = "v3.x",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"MunifTanjim/nui.nvim",
-	},
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+    },
     lazy = false,
-	config = function()
-		vim.keymap.set("n", "<C-n>", ":Neotree filesystem toggle<CR>", { desc = "toggle file explorer" })
-		vim.keymap.set("n", "<leader>e", ":Neotree filesystem focus<CR>", { desc = "focus file explorer" })
-		vim.keymap.set("n", "<leader>bf", ":Neotree buffers reveal float<CR>", { desc = "show open editors" })
+    config = function()
+        vim.keymap.set("n", "<C-n>", ":Neotree filesystem toggle<CR>", { desc = "toggle file explorer" })
+        vim.keymap.set("n", "<leader>e", ":Neotree filesystem focus<CR>", { desc = "focus file explorer" })
+        vim.keymap.set("n", "<leader>bf", ":Neotree buffers reveal float<CR>", { desc = "show open editors" })
 
         require("neo-tree").setup({
             window = {
@@ -27,5 +27,5 @@ return {
                 },
             },
         })
-	end,
+    end,
 }
