@@ -29,8 +29,7 @@ return {
 					-- lua
 					"lua_ls",
 					-- php
-					"phpactor",
-					"laravel_ls",
+					"intelephense",
 				},
 			})
 		end,
@@ -38,7 +37,14 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			vim.diagnostic.config({ virtual_text = true })
+			vim.diagnostic.config({
+				virtual_lines = true,
+				severity_sort = true,
+			})
+
+			vim.lsp.inlay_hint.enable(true)
+
+			vim.lsp.enable("intelephense")
 		end,
 	},
 	{
