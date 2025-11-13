@@ -6,10 +6,32 @@ return {
 		end,
 	},
 	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		config = function()
+			require("mason-tool-installer").setup({
+				ensure_installed = {
+					-- lua
+					"stylua",
+					-- php
+					"phpcs",
+					"phpcbf",
+					"php-cs-fixer",
+					"pint",
+				},
+			})
+		end,
+	},
+	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "stylua" },
+				ensure_installed = {
+					-- lua
+					"lua_ls",
+					-- php
+					"phpactor",
+					"laravel_ls",
+				},
 			})
 		end,
 	},
@@ -24,8 +46,21 @@ return {
 		config = function()
 			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+			local sources = {
+				require("null-ls").builtins.formatting.stylua,
+			}
+
+			-- is_laravel
+			if vim.fn.filereadable("artisan") == 1 then
+				table.insert(sources, require("null-ls").builtins.formatting.pint)
+				table.insert(sources, require("null-ls").builtins.diagnostics.php_cs_fixer)
+			else
+				table.insert(sources, require("null-ls").builtins.formatting.phpcbf)
+				table.insert(sources, require("null-ls").builtins.diagnostics.phpcs)
+			end
+
 			require("null-ls").setup({
-				sources = { require("null-ls").builtins.formatting.stylua },
+				sources = sources,
 				-- format document on save using only null-ns.
 				on_attach = function(client, bufnr)
 					if client.supports_method("textDocument/formatting") then
