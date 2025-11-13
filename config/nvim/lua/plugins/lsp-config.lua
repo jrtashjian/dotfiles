@@ -59,7 +59,8 @@ return {
 			-- is_laravel
 			if vim.fn.filereadable("artisan") == 1 then
 				table.insert(sources, require("null-ls").builtins.formatting.pint)
-				table.insert(sources, require("null-ls").builtins.diagnostics.php_cs_fixer)
+				table.insert(sources, require("null-ls").builtins.formatting.phpcsfixer)
+				table.insert(sources, require("null-ls").builtins.diagnostics.phpcs)
 			else
 				table.insert(sources, require("null-ls").builtins.formatting.phpcbf)
 				table.insert(sources, require("null-ls").builtins.diagnostics.phpcs)
