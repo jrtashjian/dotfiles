@@ -37,19 +37,19 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
+			vim.lsp.inlay_hint.enable(true)
+
 			vim.diagnostic.config({
 				virtual_lines = true,
 				severity_sort = true,
 			})
-
-			vim.lsp.inlay_hint.enable(true)
 
 			vim.lsp.enable("intelephense")
 		end,
 	},
 	{
 		"nvimtools/none-ls.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
