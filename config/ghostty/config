@@ -10,6 +10,9 @@ adjust-cell-height = 25%
 window-padding-x = 14
 window-padding-y = 14
 
+# Fix "missing or unsuitable terminal: xterm-ghostty" issue
+shell-integration-features = ssh-terminfo,ssh-env
+
 # MacOS Settings
 macos-titlebar-style = hidden
 
