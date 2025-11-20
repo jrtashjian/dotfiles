@@ -1,5 +1,6 @@
 -- Description: UI/UX related plugins and configurations
 return {
+	{ "nvim-lua/plenary.nvim" },
 	-- Dracula color scheme
 	{
 		"Mofiqul/dracula.nvim",

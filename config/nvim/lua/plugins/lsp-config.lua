@@ -1,9 +1,53 @@
+-- LSP and formatting configuration
 return {
 	{
 		"williamboman/mason.nvim",
+		opts = {},
+	},
+    -- LSP server configuration
+	{
+		"williamboman/mason-lspconfig.nvim",
+		opts = {
+			ensure_installed = {
+				"lua_ls",
+				"intelephense",
+				"eslint",
+				"bashls",
+				"html",
+				"jsonls",
+				"sqlls",
+				"terraformls",
+				"yamlls",
+			},
+		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+		opts = {},
 		config = function()
-			require("mason").setup()
+			vim.lsp.inlay_hint.enable(true)
+
+			vim.diagnostic.config({
+				virtual_lines = true,
+				severity_sort = true,
+			})
 		end,
+	},
+    -- Code formatter configuration
+	{
+		"stevearc/conform.nvim",
+		opts = {
+            default_format_opts = {
+                lsp_format = "fallback"
+            },
+			formatters_by_ft = {
+                lua = { "stylua" },
+                php = { "phpcbf", "php-cs-fixer", "pint", stop_after_first = true },
+			},
+		},
+		keys = {
+			{ "<leader>gf", ":lua require('conform').format()<CR>", desc = "Format file" },
+		},
 	},
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -19,78 +63,6 @@ return {
 					"pint",
 				},
 			})
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					-- lua
-					"lua_ls",
-					-- php
-					"intelephense",
-				},
-			})
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
-		config = function()
-			vim.lsp.inlay_hint.enable(true)
-
-			vim.diagnostic.config({
-				virtual_lines = true,
-				severity_sort = true,
-			})
-
-			vim.lsp.enable("intelephense")
-		end,
-	},
-	{
-		"nvimtools/none-ls.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-			local sources = {
-				require("null-ls").builtins.formatting.stylua,
-			}
-
-			-- is_laravel
-			if vim.fn.filereadable("artisan") == 1 then
-				table.insert(sources, require("null-ls").builtins.formatting.pint)
-				table.insert(sources, require("null-ls").builtins.formatting.phpcsfixer)
-				table.insert(sources, require("null-ls").builtins.diagnostics.phpcs)
-			else
-				table.insert(sources, require("null-ls").builtins.formatting.phpcbf)
-				table.insert(sources, require("null-ls").builtins.diagnostics.phpcs)
-			end
-
-			require("null-ls").setup({
-				sources = sources,
-				-- format document on save using only null-ns.
-				on_attach = function(client, bufnr)
-					if client.supports_method("textDocument/formatting") then
-						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-						vim.api.nvim_create_autocmd("BufWritePre", {
-							group = augroup,
-							buffer = bufnr,
-							callback = function()
-								vim.lsp.buf.format({
-									async = false,
-									bufnr = bufnr,
-									filter = function(formatter)
-										return formatter.name == "null-ls"
-									end,
-								})
-							end,
-						})
-					end
-				end,
-			})
-			-- manually format buffer content.
-			vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
 		end,
 	},
 }
