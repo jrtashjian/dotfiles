@@ -37,12 +37,10 @@ return {
 	{
 		"stevearc/conform.nvim",
 		opts = {
-            default_format_opts = {
-                lsp_format = "fallback"
-            },
+            default_format_opts = { lsp_format = "fallback" },
 			formatters_by_ft = {
                 lua = { "stylua" },
-                php = { "phpcbf", "php-cs-fixer", "pint", stop_after_first = true },
+                php = { "phpcbf", "php_cs_fixer", "pint", stop_after_first = true },
 			},
 		},
 		keys = {
