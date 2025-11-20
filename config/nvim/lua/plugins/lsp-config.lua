@@ -1,4 +1,16 @@
 -- LSP and formatting configuration
+local lsp_servers = {
+	"lua_ls",
+	"intelephense",
+	"eslint",
+	"bashls",
+	"html",
+	"jsonls",
+	"sqlls",
+	"terraformls",
+	"yamlls",
+}
+
 return {
 	{
 		"williamboman/mason.nvim",
@@ -8,29 +20,33 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
-			ensure_installed = {
-				"lua_ls",
-				"intelephense",
-				"eslint",
-				"bashls",
-				"html",
-				"jsonls",
-				"sqlls",
-				"terraformls",
-				"yamlls",
-			},
+			ensure_installed = lsp_servers,
 		},
 	},
 	{
 		"neovim/nvim-lspconfig",
-		opts = {},
-		config = function()
+		opts = function()
+            -- Dynamically create server configurations from the lsp_servers list
+			local servers = {}
+			for _, server in ipairs(lsp_servers) do
+				servers[server] = {}
+			end
+
+			return { servers = servers }
+		end,
+		config = function(_, opts)
 			vim.lsp.inlay_hint.enable(true)
 
 			vim.diagnostic.config({
 				virtual_lines = true,
 				severity_sort = true,
 			})
+
+			for server, config in pairs(opts.servers) do
+				config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+				vim.lsp.config(server, config)
+				vim.lsp.enable(server)
+			end
 		end,
 	},
     -- Code formatter configuration
@@ -63,4 +79,10 @@ return {
 			})
 		end,
 	},
+    -- Completion capabilities for LSP
+    {
+        "saghen/blink.cmp",
+        version = "1.*",
+        opts = {},
+    },
 }
