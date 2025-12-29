@@ -62,6 +62,11 @@ files_to_copy=(
     "$DOTFILES_PATH/config/git/.gitconfig.local.example:$HOME/.gitconfig.local"
 )
 
+# Define files to symlink (source:target)
+files_to_symlink=(
+    "$DOTFILES_PATH/config/zsh/.zshrc:$HOME/.zshrc"
+)
+
 # Copy each file if target doesn't exist
 for pair in "${files_to_copy[@]}"; do
     source=$(parse_pair "$pair" "source")
@@ -71,3 +76,55 @@ for pair in "${files_to_copy[@]}"; do
         echo "Copied $(basename "$source") to $target"
     fi
 done
+
+# Symlink each file
+for pair in "${files_to_symlink[@]}"; do
+    source=$(parse_pair "$pair" "source")
+    target=$(parse_pair "$pair" "target")
+    create_symlink "$target" "$source"
+done
+
+# Detect OS
+detect_os() {
+    case "$(uname -s)" in
+        Darwin)
+            echo "macos"
+            ;;
+        Linux)
+            if command -v pacman >/dev/null 2>&1; then
+                echo "arch"
+            else
+                echo "linux"
+            fi
+            ;;
+        *)
+            echo "unknown"
+            ;;
+    esac
+}
+
+# Install packages
+install_packages() {
+    local os="$1"
+    echo "Installing packages for $os..."
+
+    case "$os" in
+        macos)
+            if ! command -v brew >/dev/null 2>&1; then
+                echo "Installing Homebrew..."
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            fi
+            brew install git zsh neovim ghostty font-fira-code-nerd-font
+            ;;
+        arch)
+            sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code nerd-fonts-fira-code
+            ;;
+        *)
+            echo "Unsupported OS for package installation. Please install git, zsh, neovim, and ghostty manually."
+            ;;
+    esac
+}
+
+# Main setup
+os=$(detect_os)
+install_packages "$os"
