@@ -1,6 +1,5 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "theme": "opencode",
     "model": "opencode/minimax-m2.1-free",
     "autoupdate": true,
     "mcp": {
