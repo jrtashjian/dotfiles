@@ -1,6 +1,5 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "model": "opencode/minimax-m2.1-free",
     "autoupdate": true,
     "mcp": {
         "MCP_DOCKER": {
