@@ -6,14 +6,17 @@ set -eEo pipefail
 export DOTFILES_PATH="$HOME/.local/share/jrtashjian-dotfiles"
 DOTFILES_REPO="jrtashjian/dotfiles"
 
-# Clone or pull the dotfiles repo
-if [ -d "$DOTFILES_PATH" ]; then
-    echo -e "\nPulling latest changes in dotfiles repo."
-    cd "$DOTFILES_PATH"
-    git pull >/dev/null
-else
-    echo -e "\nCloning dotfiles from: https://github.com/${DOTFILES_REPO}.git"
-    git clone "https://github.com/${DOTFILES_REPO}.git" "$DOTFILES_PATH" >/dev/null
+# Check if we're already in the dotfiles repo
+if ! ([ "$PWD" = "$DOTFILES_PATH" ] && git rev-parse --git-dir >/dev/null 2>&1); then
+    # Clone or pull the dotfiles repo
+    if [ -d "$DOTFILES_PATH" ]; then
+        echo -e "\nPulling latest changes in dotfiles repo."
+        cd "$DOTFILES_PATH"
+        git pull >/dev/null
+    else
+        echo -e "\nCloning dotfiles from: https://github.com/${DOTFILES_REPO}.git"
+        git clone "https://github.com/${DOTFILES_REPO}.git" "$DOTFILES_PATH" >/dev/null
+    fi
 fi
 
 # Function to create symlink idempotently
