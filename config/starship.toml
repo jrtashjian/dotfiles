@@ -1,0 +1,62 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](cyan)\
+$directory\
+[](bg:pink fg:cyan)\
+$git_branch\
+$git_commit\
+[](fg:pink bg:none)\
+$character\
+"""
+
+right_format = """
+$cmd_duration\
+$time
+"""
+
+palette = 'dracula'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+continuation_prompt = "[▸▹ ](dimmed white)"
+
+[palettes.dracula]
+pink = "#ff79c6"
+red = "#ff5555"
+yellow = "#f1fa8c"
+green = "#50fa7b"
+blue = "#644ac9"
+purple = "#bd93f9"
+cyan = "#8be9fd"
+comment = "#6272a4"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+
+[character]
+success_symbol = '[](inverted green)[](green)'
+error_symbol = '[](inverted red)[](fg:red)'
+
+[directory]
+style = "bg:cyan fg:crust"
+format = "[ $path ]($style)"
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "fg:crust bg:pink"
+format = '[ $symbol$branch ]($style)'
+
+[git_commit]
+tag_symbol = '  '
+style = "fg:crust bg:pink"
+format = '[\($hash\) $tag_symbol ]($style)'
+tag_disabled = false
+
+[time]
+disabled = false
+time_format = "%_I:%M %p"
+style = "comment"
+format = '[$time]($style)'

@@ -13,4 +13,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Starship prompt
+preexec() { echo; } # Add a newline before each command for better readability
 eval "$(starship init zsh)"

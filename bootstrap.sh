@@ -68,6 +68,7 @@ files_to_copy=(
 # Define files to symlink (source:target)
 files_to_symlink=(
     "$DOTFILES_PATH/config/zsh/.zshrc:$HOME/.zshrc"
+    "$DOTFILES_PATH/config/starship.toml:$HOME/.config/starship.toml"
 )
 
 # Copy each file if target doesn't exist
