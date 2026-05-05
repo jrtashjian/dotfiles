@@ -4,8 +4,8 @@
 export EDITOR=nvim
 
 # Path
-export PATH=$HOME/.local/bin:$PATH
-export PATH=/Users/jrtashjian/.opencode/bin:$PATH # opencode
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+[[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH" # opencode
 
 # Node Version Manager (https://github.com/nvm-sh/nvm)
 export NVM_DIR="$HOME/.nvm"
