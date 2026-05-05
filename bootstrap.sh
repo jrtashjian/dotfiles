@@ -95,14 +95,30 @@ detect_os() {
             echo "macos"
             ;;
         Linux)
-            if command -v pacman >/dev/null 2>&1; then
-                echo "arch"
-            else
-                echo "linux"
+            if [ ! -r /etc/os-release ]; then
+                echo "Error: /etc/os-release not found. Unsupported Linux distribution." >&2
+                exit 1
             fi
+
+            # shellcheck disable=SC1091
+            . /etc/os-release
+
+            case "${ID:-}" in
+                arch)
+                    echo "arch"
+                    ;;
+                debian|ubuntu)
+                    echo "debian"
+                    ;;
+                *)
+                    echo "Error: Unsupported Linux distribution '${ID:-unknown}'." >&2
+                    exit 1
+                    ;;
+            esac
             ;;
         *)
-            echo "unknown"
+            echo "Error: Unsupported operating system '$(uname -s)'." >&2
+            exit 1
             ;;
     esac
 }
@@ -128,7 +144,8 @@ install_packages() {
             sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code nerd-fonts-fira-code
             ;;
         *)
-            echo "Unsupported OS for package installation. Please install git, zsh, neovim, and ghostty manually."
+            echo "Error: No package installation defined for '$os'." >&2
+            exit 1
             ;;
     esac
 }
