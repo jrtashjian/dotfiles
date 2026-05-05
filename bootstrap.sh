@@ -118,6 +118,10 @@ install_packages() {
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
             brew install git zsh neovim ghostty font-fira-code-nerd-font
+            if ! command -v starship >/dev/null 2>&1; then
+                echo "Installing Starship..."
+                /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+            fi
             ;;
         arch)
             sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code nerd-fonts-fira-code
