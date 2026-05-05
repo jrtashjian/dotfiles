@@ -8,7 +8,9 @@ window-padding-x = 14
 window-padding-y = 14
 
 # Fix "missing or unsuitable terminal: xterm-ghostty" issue
-shell-integration-features = ssh-terminfo,ssh-env
+# - https://ghostty.org/docs/help/terminfo#sudo
+# - https://ghostty.org/docs/help/terminfo#ssh
+shell-integration-features = ssh-terminfo,ssh-env,sudo
 
 # MacOS Settings
 macos-titlebar-style = hidden
