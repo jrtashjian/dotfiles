@@ -1,4 +1,7 @@
 # Zsh configuration
+if [ -f ~/.aliases ]; then
+    \. ~/.aliases
+fi
 
 # Editor
 export EDITOR=nvim

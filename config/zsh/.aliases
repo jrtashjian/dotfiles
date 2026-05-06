@@ -1,0 +1,20 @@
+# File listing options
+alias ls='ls --color=auto -F'
+alias la='ls -A'
+alias ld='command ls --color=auto -d */' # List only directories
+alias ll='ls -alh'
+alias lr='ls -R' # Recursive listing
+alias lc='find . -type f | wc -l' # Count files in current directory and subdirectories
+alias lb='ls -lhSA' # List files sorted by size
+alias lm='ls -lhAt' # List files sorted by modification time
+
+alias grep='grep --color=auto'
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# External Services
+alias myip='curl icanhazip.com'
