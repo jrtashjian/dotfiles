@@ -8,6 +8,7 @@ export EDITOR=nvim
 
 # Path
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+[[ -d "$HOME/.config/composer/vendor/bin" ]] && export PATH="$HOME/.config/composer/vendor/bin:$PATH" # composer
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH" # opencode
 
 # Node Version Manager (https://github.com/nvm-sh/nvm)
