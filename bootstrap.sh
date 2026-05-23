@@ -135,11 +135,30 @@ install_packages() {
                 echo "Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
-            brew install git zsh neovim ghostty font-fira-code-nerd-font
+            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font
             if ! command -v starship >/dev/null 2>&1; then
                 echo "Installing Starship..."
                 /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
             fi
+            ;;
+        debian)
+            sudo apt update
+            sudo apt install -y git zsh tmux neovim
+            # Install font only if not already installed
+            if ! fc-list | grep -q "Fira Code Nerd Font"; then
+            echo "Installing Fira Code Nerd Font..." && \
+                mkdir /tmp/firacode && \
+                curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip -o /tmp/firacode/firacode.zip && \
+                unzip /tmp/firacode/firacode.zip -d /tmp/firacode && \
+                sudo mkdir -p "$HOME/.local/share/fonts" && \
+                sudo mv /tmp/firacode/*.ttf "$HOME/.local/share/fonts/" && \
+                rm -rf /tmp/firacode
+            if ! command -v starship >/dev/null 2>&1; then
+                echo "Installing Starship..."
+                /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+            fi
+            # Set zsh as default shell for current user
+            chsh -s /bin/zsh
             ;;
         arch)
             sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code nerd-fonts-fira-code
