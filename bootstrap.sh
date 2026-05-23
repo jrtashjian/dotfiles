@@ -142,6 +142,8 @@ install_packages() {
             fi
             ;;
         debian)
+            # obtain sudo privileges upfront
+            sudo -v || { echo "Error: This script requires sudo privileges." >&2; exit 1; }
             sudo apt update
             sudo apt install -y git zsh tmux neovim
             # Install font only if not already installed
@@ -160,7 +162,7 @@ install_packages() {
             fi
             # Set zsh as default shell for current user
             if [ "$SHELL" != "/bin/zsh" ]; then
-                chsh -s /bin/zsh
+                sudo chsh -s /bin/zsh "$USER"
             fi
             ;;
         arch)
