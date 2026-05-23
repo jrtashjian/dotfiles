@@ -144,7 +144,7 @@ install_packages() {
         debian)
             # obtain sudo privileges upfront
             sudo -v || { echo "Error: This script requires sudo privileges." >&2; exit 1; }
-            sudo apt update
+            sudo apt update -qqq
             sudo apt install -y git zsh tmux neovim
             # Install font only if not already installed
             if ! fc-list :family | grep -i "firacode nerd font" >/dev/null 2>&1; then
