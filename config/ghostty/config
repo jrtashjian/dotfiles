@@ -15,3 +15,6 @@ shell-integration-features = ssh-terminfo,ssh-env,sudo
 # MacOS Settings
 macos-titlebar-style = hidden
 
+# Fix Ctrl + Arrow keys for word jumping in the shell
+keybind = ctrl+left=esc:b
+keybind = ctrl+right=esc:f
