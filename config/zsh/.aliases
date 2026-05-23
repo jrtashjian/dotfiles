@@ -18,3 +18,18 @@ alias .....='cd ../../../..'
 
 # External Services
 alias myip='curl icanhazip.com'
+
+# Git
+alias gs='git status -s' # Short status
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gp='git push'
+alias gpl='git pull'
+alias gf='git fetch'
+alias gl='git log --oneline --graph --decorate'
+alias gd='git diff'
+alias gco='git checkout'
+alias gbr='git branch'
+alias gundo='git reset --soft HEAD~1' # Undo last commit but keep changes
