@@ -1,10 +1,12 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "master",
+	branch = "main",
 	lazy = false,
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter.configs").setup({
+		require("nvim-treesitter").setup({
+			-- Directory to install parsers and queries to
+			install_dir = vim.fn.stdpath('data') .. '/site',
 			ensure_installed = {
 				"lua",
 				"vim",
