@@ -6,7 +6,7 @@ return {
 	config = function()
 		require("nvim-treesitter").setup({
 			-- Directory to install parsers and queries to
-			install_dir = vim.fn.stdpath('data') .. '/site',
+			install_dir = vim.fn.stdpath("data") .. "/site",
 			ensure_installed = {
 				"lua",
 				"vim",

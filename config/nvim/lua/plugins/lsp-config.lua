@@ -13,12 +13,12 @@ local lsp_servers = {
 
 return {
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		opts = {},
 	},
-    -- LSP server configuration
+	-- LSP server configuration
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		opts = {
 			ensure_installed = lsp_servers,
 		},
@@ -26,7 +26,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		opts = function()
-            -- Dynamically create server configurations from the lsp_servers list
+			-- Dynamically create server configurations from the lsp_servers list
 			local servers = {}
 			for _, server in ipairs(lsp_servers) do
 				servers[server] = {}
@@ -43,20 +43,20 @@ return {
 			})
 
 			for server, config in pairs(opts.servers) do
-				config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
 				vim.lsp.config(server, config)
 				vim.lsp.enable(server)
 			end
 		end,
 	},
-    -- Code formatter configuration
+	-- Code formatter configuration
 	{
 		"stevearc/conform.nvim",
 		opts = {
-            default_format_opts = { lsp_format = "fallback" },
+			default_format_opts = { lsp_format = "fallback" },
 			formatters_by_ft = {
-                lua = { "stylua" },
-                php = { "phpcbf", "php_cs_fixer", "pint", stop_after_first = true },
+				lua = { "stylua" },
+				php = { "phpcbf", "php_cs_fixer", "pint", stop_after_first = true },
 			},
 		},
 		keys = {
@@ -79,10 +79,10 @@ return {
 			})
 		end,
 	},
-    -- Completion capabilities for LSP
-    {
-        "saghen/blink.cmp",
-        version = "1.*",
-        opts = {},
-    },
+	-- Completion capabilities for LSP
+	{
+		"saghen/blink.cmp",
+		version = "1.*",
+		opts = {},
+	},
 }
