@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# =============================================================================
+# tmux-workspace - Dynamic tmux workspace creator
+# Usage: tmux-workspace [SESSION_NAME]
+# =============================================================================
+
+set -euo pipefail
+
+# Session name
+SESSION_NAME="${1:-$(basename "$PWD")}"
+SESSION_NAME="${SESSION_NAME//[^a-zA-Z0-9_-]/_}"
+
+# Attach if session already exists
+if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "Session '$SESSION_NAME' exists → attaching"
+    tmux attach-session -t "$SESSION_NAME"
+    exit 0
+fi
+
+echo "Creating new workspace: $SESSION_NAME"
+
+# Create base session with OpenCode first
+tmux new-session -d -s "$SESSION_NAME" -n "OpenCode" -c "$PWD"
+tmux send-keys -t "$SESSION_NAME:OpenCode" "opencode --port" C-m
+
+# Get sorted immediate child directories (non-hidden)
+subdirs=()
+while IFS= read -r dir; do
+    subdirs+=("$dir")
+done < <(find . -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec basename {} \; | sort)
+
+# Create nvim window for each subdirectory
+for dir in "${subdirs[@]}"; do
+    tmux new-window -t "$SESSION_NAME" -n "$dir" -c "$PWD/$dir"
+    tmux send-keys -t "$SESSION_NAME:$dir" "nvim ." C-m
+done
+
+# Add final shell window
+tmux new-window -t "$SESSION_NAME" -n "Shell" -c "$PWD"
+
+# Start on OpenCode window
+tmux select-window -t "$SESSION_NAME:OpenCode"
+
+# Attach
+tmux attach-session -t "$SESSION_NAME"

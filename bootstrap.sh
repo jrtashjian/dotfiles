@@ -150,6 +150,7 @@ install_packages() {
             curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
             sudo rm -rf /opt/nvim-linux-x86_64
             sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+            rm nvim-linux-x86_64.tar.gz
             # Install font only if not already installed
             if ! fc-list :family | grep -i "firacode nerd font" >/dev/null 2>&1; then
                 echo "Installing Fira Code Nerd Font..."
