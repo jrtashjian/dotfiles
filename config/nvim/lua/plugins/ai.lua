@@ -42,33 +42,83 @@ return {
 
             -- Handle `opencode` events
             vim.api.nvim_create_autocmd("User", {
-              pattern = "OpencodeEvent:*", -- Optionally filter event types
+              pattern = "OpencodeEvent:*",
               callback = function(args)
                 local event = args.data.event
 
-                -- if event.type == "permission.asked" then
-                --     vim.notify(vim.inspect(event), vim.log.levels.INFO, { timeout = false, title = "Opencode" })
-                --     vim.notify("`opencode` is asking for permission to execute code", vim.log.levels.WARN)
-                -- end
+                local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
 
-                -- if event.type == "session.error" then
-                --     vim.notify(vim.inspect(event), vim.log.levels.INFO, { timeout = false, title = "Opencode" })
-                --     vim.notify("`opencode` session error: " .. event.data.error, vim.log.levels.ERROR)
-                -- end
+                -- -- Log all events for debugging 
+                -- vim.notify(vim.inspect(event), vim.log.levels.INFO, { title = "OpenCode", timeout = 1 })
 
-                if event.type == "question.asked" then
-                    vim.notify(vim.inspect(event), vim.log.levels.INFO, { timeout = false, title = "Opencode" })
-                    vim.notify("`opencode` is asking a question: ", vim.log.levels.INFO)
+                if event.type == "session.status" then
+                    -- event = {
+                    --   properties = {
+                    --     status = { type = "busy" }
+                    --   },
+                    --   type = "session.status"
+                    -- }
+                    --
+                    -- event = {
+                    --   properties = {
+                    --     status = { type = "idle" }
+                    --   },
+                    --   type = "session.status"
+                    -- }
+                    local status = event.properties.status.type
+
+                    local status_message = ({
+                        busy = "Thinking...",
+                        idle = "All done!",
+                    })[status] or (status)
+
+                    vim.notify(status_message, vim.log.levels.INFO, {
+                        id = "opencode_status",
+                        timeout = status == "idle" and 3000 or false, -- Keep busy status until it changes, auto-dismiss idle status
+                        title = "OpenCode",
+                        opts = function(notif)
+                            local idx = math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1
+                            notif.icon = status == "busy" and spinner[idx] .. " " or ""
+                        end,
+                    })
                 end
 
-                -- Notify when `opencode` finishes responding to an `ask()` or `select()` call
-                if event.type == "session.idle" then
-                    vim.notify("Finished responding", vim.log.levels.INFO, { title = "Opencode" })
-                end
+                -- if event.type == "question.asked" then
+                --     -- event = {
+                --     --   properties = {
+                --     --     questions = { {
+                --     --         header = "Commit message",
+                --     --         options = { {
+                --     --             description = "Add autocmds for opencode events like question.asked, session.idle, and server.connected",
+                --     --             label = "Add opencode event notifications"
+                --     --           }, {
+                --     --             description = "I'll provide my own commit message",
+                --     --             label = "Let me write a custom message"
+                --     --           } },
+                --     --         question = "What commit message would you like to use?"
+                --     --       } },
+                --     --   },
+                --     --   type = "question.asked"
+                --     -- }
+                --     vim.notify(event.properties.questions[1].header, vim.log.levels.INFO, { title = "OpenCode" })
+                -- end
 
                 if event.type == "server.connected" then
-                    vim.notify("Connected to server", vim.log.levels.INFO, { title = "OpenCode" })
+                    -- event = {
+                    --   properties = vim.empty_dict(),
+                    --   type = "server.connected"
+                    -- }
+                    vim.notify("Connected", vim.log.levels.INFO, { id="opencode_connection", title = "OpenCode" })
                 end
+
+                if event.type == "server.instance.disposed" then
+                    -- event = {
+                    --   properties = { directory = "/current/working/directory" },
+                    --   type = "server.instance.disposed"
+                    -- }
+                    vim.notify("Disconnected", vim.log.levels.WARN, { id="opencode_connection", title = "OpenCode", timeout = false })
+                end
+
               end,
             })
 		end,
