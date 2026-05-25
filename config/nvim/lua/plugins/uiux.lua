@@ -36,8 +36,6 @@ return {
 			indent = { enabled = true },
 			input = { enabled = true },
 			notifier = { enabled = true },
-			scratch = { enabled = true },
-			terminal = { enabled = true },
 			picker = {
 				previewers = {
 					-- Use terminal style previewer for diffs
@@ -60,7 +58,6 @@ return {
             -- Top Pickers & Explorer
             { "<leader><space>", function() Snacks.picker.smart() end,                desc = "Smart Find Files" },
             { "<leader>,",       function() Snacks.picker.buffers() end,              desc = "Buffers" },
-            { "<leader>/",       function() Snacks.picker.grep() end,                 desc = "Grep" },
             { "<leader>:",       function() Snacks.picker.command_history() end,      desc = "Command History" },
             { "<leader>e",       function() Snacks.explorer() end,                    desc = "File Explorer" },
 
@@ -73,6 +70,7 @@ return {
             { "<leader>gb",      function() Snacks.picker.git_branches() end,         desc = "Git Branches" },
             { "<leader>gl",      function() Snacks.picker.git_log() end,              desc = "Git Log" },
             { "<leader>gs",      function() Snacks.picker.git_status() end,           desc = "Git Status" },
+            { "<leader>gd",      function() Snacks.picker.git_diff() end,             desc = "Git Diff (Hunks)" },
             { "<leader>gB",      function() Snacks.gitbrowse() end,                   desc = "Git Browse",                 mode = { "n", "v" } },
 
             -- gh
