@@ -135,7 +135,7 @@ install_packages() {
                 echo "Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
-            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh
+            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep
             if ! command -v starship >/dev/null 2>&1; then
                 echo "Installing Starship..."
                 /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
@@ -152,7 +152,7 @@ install_packages() {
             echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
             sudo apt update -qqq
-            sudo apt install -y git zsh tmux gh jq
+            sudo apt install -y git zsh tmux gh jq ripgrep
 
             # Install latest version of Neovim
             curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
