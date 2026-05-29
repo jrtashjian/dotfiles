@@ -1,16 +1,6 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = """
-[](cyan)\
-$directory\
-[](bg:pink fg:cyan)\
-$git_branch\
-$git_commit\
-[](fg:pink bg:none)\
-$character\
-"""
-
 right_format = """
 $cmd_duration\
 $time
@@ -34,29 +24,59 @@ comment = "#6272a4"
 base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
+background = "#282a36"
+foreground = "#f8f8f2"
 
 [character]
-success_symbol = '[](inverted green)[](green)'
-error_symbol = '[](inverted red)[](fg:red)'
+success_symbol = "[❯](comment)"
+error_symbol = "[❯](comment)"
 
 [directory]
-style = "bg:cyan fg:crust"
-format = "[ $path ]($style)"
+style = "bg:cyan fg:background"
 truncation_symbol = "…/"
+format = "[](cyan)[ $path ]($style)[](fg:cyan bg:background)"
 
 [git_branch]
 symbol = " "
-style = "fg:crust bg:pink"
-format = '[ $symbol$branch ]($style)'
+style = "fg:background bg:pink"
+format = "([](fg:background bg:pink)[ $symbol$branch ]($style)[](fg:pink bg:background) )"
 
 [git_commit]
 tag_symbol = '  '
-style = "fg:crust bg:pink"
-format = '[\($hash\) $tag_symbol ]($style)'
+style = "fg:background bg:pink"
+format = "(\b\b[\\($hash\\)( $tag) ]($style)[](fg:pink bg:background) )"
 tag_disabled = false
+
+[git_status]
+style = "fg:comment bg:background"
+format = "([$stashed $ahead_behind ]($style))([$conflicted$renamed$modified$untracked$deleted$staged](fg:comment) )"
+stashed = " ${count}"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+conflicted = "[󰞇 ](fg:red)"
+renamed = "[ ](fg:yellow)"
+modified = "[ ](fg:yellow)"
+untracked = "[ ](fg:yellow)"
+deleted = "[ ](fg:red)"
+staged = "[ ](fg:green)"
+
+[nodejs]
+disabled = true
+
+[package]
+disabled = true
+
+[php]
+disabled = true
+
+[terraform]
+disabled = true
 
 [time]
 disabled = false
 time_format = "%_I:%M %p"
 style = "comment"
 format = '[$time]($style)'
+
+[vagrant]
+disabled = true
