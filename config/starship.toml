@@ -1,6 +1,15 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_status
+
+$character\
+"""
+
 right_format = """
 $cmd_duration\
 $time
@@ -49,10 +58,10 @@ tag_disabled = false
 
 [git_status]
 style = "fg:comment bg:background"
-format = "([$stashed $ahead_behind ]($style))([$conflicted$renamed$modified$untracked$deleted$staged](fg:comment) )"
-stashed = " ${count}"
-ahead = "⇡${count}"
-behind = "⇣${count}"
+format = "([$stashed$ahead_behind]($style))([$conflicted$renamed$modified$untracked$deleted$staged](fg:comment) )"
+stashed = " ${count} "
+ahead = "⇡${count} "
+behind = "⇣${count} "
 conflicted = "[󰞇 ](fg:red)"
 renamed = "[ ](fg:yellow)"
 modified = "[ ](fg:yellow)"
