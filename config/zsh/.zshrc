@@ -12,6 +12,7 @@ export EDITOR=nvim
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH" # opencode
 [[ -d "/opt/nvim-linux-x86_64/bin" ]] && export PATH="/opt/nvim-linux-x86_64/bin:$PATH" # Neovim
 [[ -d "$HOME/.config/tmux/bin" ]] && export PATH="$HOME/.config/tmux/bin:$PATH" # tmux-workspace
+[[ -d "/opt/homebrew/opt/ruby/bin" ]] && export PATH="/opt/homebrew/opt/ruby/bin:$PATH" # Homebrew Ruby
 
 # Homebrew Zsh completions
 if command -v brew &>/dev/null; then
