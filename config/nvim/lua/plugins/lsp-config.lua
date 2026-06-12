@@ -60,7 +60,7 @@ return {
 			},
 		},
 		keys = {
-			{ "<leader>gf", ":lua require('conform').format()<CR>", desc = "Format file" },
+			{ "<leader>gf", function() require("conform").format() end, desc = "Format file" },
 		},
 	},
 	{
