@@ -152,13 +152,19 @@ install_packages() {
             echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
             sudo apt update -qqq
-            sudo apt install -y git zsh tmux gh jq ripgrep
+            sudo apt install -y git zsh tmux gh jq ripgrep fd-find
 
             # Install latest version of Neovim
             curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
             sudo rm -rf /opt/nvim-linux-x86_64
             sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
             rm nvim-linux-x86_64.tar.gz
+
+            # Install the latest version of Zellij
+            wget https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz
+            tar -xzf zellij-x86_64-unknown-linux-musl.tar.gz
+            sudo install zellij /usr/local/bin/
+            rm zellij zellij-x86_64-unknown-linux-musl.tar.gz
 
             # Install font only if not already installed
             if ! fc-list :family | grep -i "firacode nerd font" >/dev/null 2>&1; then
