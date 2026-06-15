@@ -135,7 +135,7 @@ install_packages() {
                 echo "Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
-            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep
+            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep fd
             if ! command -v starship >/dev/null 2>&1; then
                 echo "Installing Starship..."
                 /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
