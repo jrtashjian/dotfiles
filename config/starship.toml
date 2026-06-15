@@ -39,6 +39,7 @@ foreground = "#f8f8f2"
 [character]
 success_symbol = "[❯](comment)"
 error_symbol = "[❯](comment)"
+vimcmd_symbol = "[❯](yellow)"
 
 [directory]
 style = "bg:cyan fg:background"

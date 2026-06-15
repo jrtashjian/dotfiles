@@ -14,6 +14,9 @@ window-width = 175
 # - https://ghostty.org/docs/help/terminfo#ssh
 shell-integration-features = ssh-terminfo,ssh-env,sudo
 
-# Fix Ctrl + Arrow keys for word jumping in the shell
-keybind = ctrl+left=esc:b
-keybind = ctrl+right=esc:f
+# Ignore common Alt+ combos that could leak ESC sequences
+keybind = alt+left=ignore
+keybind = alt+right=ignore
+keybind = alt+backspace=ignore
+
+macos-option-as-alt = true
