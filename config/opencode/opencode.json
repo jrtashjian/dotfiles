@@ -3,5 +3,10 @@
     "autoupdate": "notify",
     "model": "xai/grok-build-0.1",
     "formatter": true,
-    "lsp": true
+    "lsp": true,
+    "permission": {
+        "external_directory": {
+            "~/Documents/Obsidian/Personal Vault/code/**": "allow"
+        }
+    }
 }
