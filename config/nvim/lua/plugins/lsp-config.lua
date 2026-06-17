@@ -28,9 +28,28 @@ return {
 		opts = function()
 			-- Dynamically create server configurations from the lsp_servers list
 			local servers = {}
+
 			for _, server in ipairs(lsp_servers) do
 				servers[server] = {}
 			end
+
+            servers.intelephense = {
+                settings = {
+                    intelephense = {
+                        stubs = {
+                            -- Core PHP stubs
+                            "bcmath", "bz2", "calendar", "Core", "curl", "date", "dom", "fileinfo",
+                            "filter", "gd", "gettext", "hash", "iconv", "intl", "json", "libxml",
+                            "mbstring", "mysqli", "mysqlnd", "openssl", "pcre", "PDO", "pdo_mysql",
+                            "phar", "posix", "readline", "reflection", "session", "SimpleXML",
+                            "soap", "sockets", "sodium", "SPL", "sqlite3", "standard", "tokenizer",
+                            "xml", "xmlreader", "xmlwriter", "zip", "zlib",
+
+                            -- WordPress
+                            "wordpress" }
+                    }
+                }
+            }
 
 			return { servers = servers }
 		end,
