@@ -42,7 +42,7 @@ return {
                             "filter", "gd", "gettext", "hash", "iconv", "intl", "json", "libxml",
                             "mbstring", "mysqli", "mysqlnd", "openssl", "pcre", "PDO", "pdo_mysql",
                             "phar", "posix", "readline", "reflection", "session", "SimpleXML",
-                            "soap", "sockets", "sodium", "SPL", "sqlite3", "standard", "tokenizer",
+                            "soap", "sockets", "sodium", "SPL", "sqlite3", "standard", "superglobals", "tokenizer",
                             "xml", "xmlreader", "xmlwriter", "zip", "zlib",
 
                             -- WordPress
