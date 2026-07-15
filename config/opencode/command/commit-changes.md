@@ -1,62 +1,39 @@
 ---
-description: Generate a concise git commit message from staged changes following project conventions. Confirm with user before committing.
+description: Generate a concise git commit message from staged changes following project conventions.
 ---
 
-Generate a concise git commit message from the staged changes.
+# Generate concise git commit message from staged changes
 
 ### Pre-Commit Checks
-1. **Detect Project Convention**: Run `git log --oneline -20` to analyze recent patterns. If the project follows a clear convention (e.g., Conventional Commits, Jira tickets), **strictly follow it** — it takes precedence over defaults below.
 
-2. **Stage Changes**: If nothing is staged, automatically run `git add -A`, then proceed.
+1. **Detect convention**: Run `git log --oneline -20`. Strictly follow project patterns (Conventional Commits, Jira, etc.).
+2. **Stage if needed**: If nothing staged, run `git add -A`.
+3. **Atomic check**: Warn if unrelated logical changes; suggest split.
 
-3. **Atomic Commit Validation**: If staged changes represent multiple unrelated logical changes, **warn the user** and suggest splitting into multiple commits.
+### Message Rules
 
-### Commit Message Rules (Default)
+**Subject** (≤72 chars, ideally <60): Imperative, capitalized, no period. No scope unless convention requires. Completes: "If applied, this commit will _[subject]_".
+**Body**: Short *why* only (diff shows *what*). 72-char wrap. Omit if subject sufficient.
 
-**Subject Line** (first line):
-- Imperative mood, capitalized, no trailing period
-- Maximum 72 characters, ideally under 60
-- No scope prefix unless project convention requires it
-- Completes: "If applied, this commit will _[subject]_"
+### Workflow (minimize steps)
 
-**Body** (after blank line):
-- Keep it **short** — explain *why*, not *what* (the diff shows what)
-- Wrap at 72 characters
-- Skip the body entirely if the subject alone is sufficient
+1. **First action only**: Call `bash` tools **in parallel**:
+   - `git log --oneline -20`
+   - `git diff --cached`
+2. Analyze convention + atomicity + intent.
+3. Generate concise message (specific, e.g. class/method names matching recent commits).
+4. Present **once** via `question` tool (below).
+5. Commit **only** on "Yes, use this commit message".
 
-### Workflow
-1. Analyze recent commits + staged diff.
-2. Generate a commit message — keep it concise.
-3. Present the proposed message to the user using the `question` tool.
+### question tool (single confirmation)
 
-### Using the `question` tool
-
-Call the tool with `questions` as an array of question objects. Each object has these fields:
-
-| Field | Type | Description |
-|---|---|---|
-| `header` | string | Very short label (max 30 chars) |
-| `question` | string | Complete question |
-| `options` | array | Available choices; each has `label` (1-5 words, concise) and `description` (explanation of choice) |
-| `multiple` | boolean (optional) | Allow selecting multiple choices |
-| `custom` | boolean (optional, default `true`) | Allow typing a custom answer |
-
-Answers are returned as `Array<Array<string>>` — each question's answer is an array of selected option labels. Since `custom` defaults to `true`, users can always type a custom response. For multi-question flows, users can navigate between questions before submitting.
-
-For the commit confirmation, use a single question:
-
-```
-questions: [
-  {
-    header: "Confirm Commit",
-    question: "{proposed commit message}\n\n---\nDoes this commit message accurately represent the changes?",
-    options: [
-      { label: "Yes, use this commit message", description: "Proceed with committing" },
-      { label: "Edit message", description: "Modify the commit message" },
-      { label: "Cancel", description: "Abort the commit" }
-    ]
-  }
-]
-```
-
-Only proceed with the commit if the user selects "Yes, use this commit message". When "Edit message" is selected, ask for the desired changes and regenerate.
+```json
+questions: [{
+  "header": "Confirm Commit",
+  "question": "{proposed message}\n\n---\nDoes this commit message accurately represent the changes?",
+  "options": [
+    {"label": "Yes, use this commit message", "description": "Proceed with committing"},
+    {"label": "Edit message", "description": "Modify the commit message"},
+    {"label": "Cancel", "description": "Abort the commit"}
+  ]
+}]
