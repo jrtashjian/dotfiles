@@ -41,7 +41,7 @@ return {
                             "bcmath", "bz2", "calendar", "Core", "curl", "date", "dom", "fileinfo",
                             "filter", "gd", "gettext", "hash", "iconv", "intl", "json", "libxml",
                             "mbstring", "mysqli", "mysqlnd", "openssl", "pcre", "PDO", "pdo_mysql",
-                            "phar", "posix", "readline", "reflection", "session", "SimpleXML",
+                            "phar", "posix", "readline", "Reflection", "session", "SimpleXML",
                             "soap", "sockets", "sodium", "SPL", "sqlite3", "standard", "superglobals", "tokenizer",
                             "xml", "xmlreader", "xmlwriter", "zip", "zlib",
 
