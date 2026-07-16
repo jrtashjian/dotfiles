@@ -102,6 +102,23 @@ return {
         },
 		-- stylua: ignore end
 	},
+    -- Which-key for keybinding hints
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+            preset = "helix",
+        },
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show()
+                end,
+                desc = "Buffer Local Keymaps",
+            },
+        },
+    },
 	-- Gitsigns with current line blame
 	{
 		"lewis6991/gitsigns.nvim",
