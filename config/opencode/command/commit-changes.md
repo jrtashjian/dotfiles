@@ -1,5 +1,7 @@
 ---
 description: Generate a concise git commit message from staged changes following project conventions.
+subtask: true
+model: opencode/north-mini-code-free
 ---
 
 # Generate concise git commit message from staged changes

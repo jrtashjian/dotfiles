@@ -1,6 +1,15 @@
 ---
 description: Adversarial code review of a diff or PR. Surface real bugs the author would actually want to fix, maintaining a high bar for quality. Use when the user asks to "review this", "review the diff", "review my changes", "review this PR", "any bugs in this?", "adversarial review", "tear this apart", "code review", or similar. Also trigger proactively before opening a PR or after any substantial set of changes.
 mode: subagent
+model: xai/grok-4.5
+temperature: 0.1
+permission:
+  edit: deny
+  bash:
+    "*": deny
+    "git *": allow
+    "rg *": allow
+    "grep *": allow
 ---
 
 # Adversarial Code Review

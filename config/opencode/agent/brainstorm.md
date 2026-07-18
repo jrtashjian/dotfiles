@@ -1,6 +1,17 @@
 ---
 description: "Turns vague ideas into clear, approved design specifications before any implementation work begins. Use this subagent for any new feature, component, or behavioral change."
 mode: subagent
+model: xai/grok-4.3
+permission:
+  edit:
+    "*": deny
+    "docs/**": allow
+  bash:
+    "*": ask
+    "git *": allow
+    "ls *": allow
+    "rg *": allow
+    "find *": allow
 ---
 
 # Brainstorming Ideas Into Designs
