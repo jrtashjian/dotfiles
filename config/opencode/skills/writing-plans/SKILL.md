@@ -3,6 +3,12 @@ name: writing-plans
 description: "Use ONLY when you have an approved spec or requirements for a multi-step task. Create a detailed, actionable implementation plan before touching any code. Keywords: implementation plan, write plan, detailed plan, before coding, multi-step task."
 ---
 
+Current git remote:
+!`git config --get remote.origin.url`
+
+Current directory:
+!`pwd`
+
 # Writing Plans
 
 ## Overview
@@ -14,8 +20,9 @@ Assume the reader is a skilled developer but knows nothing about our toolset or 
 **Always start with:**
 "I'm using the writing-plans skill to create the implementation plan."
 
-**Save plans to:** `docs/specs/plans/YYYY-MM-DD-<feature-name>.md`
-(User preferences for plan location override this default.)
+**Save plans to Obsidian:** Parse the injected git remote and pwd above to determine {org}/{project}. If unclear, choose sensible default like `local/$(basename of pwd)`. Save to:
+`~/Documents/Obsidian/Personal Vault/code/{org}/{project}/plans/YYYY-MM-DD-<feature-name>.md`
+Always document plans in the Obsidian vault. Never use the question tool.
 
 ## Scope Check
 
@@ -120,7 +127,7 @@ Fix all issues inline. No need to re-review — just correct and proceed.
 
 After saving the plan, say:
 
-> "Plan complete and saved to `docs/specs/plans/<filename>.md`."
+> "Plan complete and saved to the Obsidian vault under `.../plans/<filename>.md`."
 
 ---
 

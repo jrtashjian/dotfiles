@@ -37,11 +37,11 @@ Invoke via `@name` or let primaries call them.
   - Steps capped at 25
 
 - **@docs**  
-  Dedicated wrapper for Obsidian vault project documentation.  
+  Self-contained specialist for all Obsidian vault project documentation (create, update, review, explain, capture learnings).  
   - Model: grok-4.3  
-  - Full access to `~/Documents/Obsidian/Personal Vault/code/**`  
-  - Loads `project-documentation` skill for the heavy lifting  
-  - Keeps large PKM context out of main chat
+  - Unrestricted write access to `~/Documents/Obsidian/Personal Vault/code/**` (no confirmation on writes)  
+  - Single agent — no competing skill  
+  - Keeps heavy PKM context isolated in its own session
 
 ## Custom Commands
 
@@ -84,10 +84,13 @@ After edits:
 - It stages if needed, follows project commit style from `git log`, proposes message.
 - Confirm with "Yes, use this commit message".
 
-### Document a system or capture learnings
+### Document, update, or review a system in Obsidian
 - `@docs document how authentication works`
-- Or: "Record this new understanding about the data flow"
-- The subagent will detect the project and use the `project-documentation` skill to maintain the vault structure under `~/Documents/Obsidian/Personal Vault/code/...`
+- `@docs review the documentation for the payment flow`
+- Or: "Record this new understanding about the data flow" or "help me understand the project from the docs"
+- The agent detects the project from git, maintains the canonical structure under `~/Documents/Obsidian/Personal Vault/code/...`, and can review/improve existing docs directly (no confirmation needed for writes).
+- Use @docs for documentation-related review and understanding instead of @explore.
+- Implementation plans (from writing-plans skill) and design specs are now saved directly into the Obsidian vault under `/plans/` and `/designs/` respectively (using sensible project detection).
 
 ### Quick codebase exploration (cheap)
 - `@explore find all places that call the payment service`

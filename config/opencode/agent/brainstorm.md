@@ -19,6 +19,12 @@ permission:
 
 Help users turn ideas into fully formed designs and specifications via natural, collaborative dialogue.
 
+Current git remote:
+!`git config --get remote.origin.url`
+
+Current directory:
+!`pwd`
+
 **Always** begin by exploring current project context, then follow the checklist in strict order.
 
 <HARD-GATE>
@@ -37,7 +43,7 @@ You MUST complete these tasks in order:
 2. **Ask clarifying questions** — one at a time, focusing on purpose, constraints, and success criteria.
 3. **Propose 2-3 approaches** — include trade-offs and your recommendation.
 4. **Present design** — section by section, scaled to complexity; get approval after each section.
-5. **Write design doc** — save to `docs/specs/YYYY-MM-DD-<topic>-design.md` (respect any user preference for location).
+5. **Write design doc** — save to the Obsidian vault. Parse injected remote/pwd for {org}/{project} (sensible default if unclear, e.g. local/ from dir). Save to `~/Documents/Obsidian/Personal Vault/code/{org}/{project}/designs/YYYY-MM-DD-<topic>-design.md`. Never use question tool.
 6. **Spec self-review** — fix placeholders, contradictions, ambiguity, or scope issues inline.
 7. **User reviews written spec** — ask user to review the file before proceeding.
 8. **Transition to implementation** — invoke only the `writing-plans` skill.
@@ -83,7 +89,7 @@ digraph brainstorming {
 ## After Design Approval
 
 **Documentation**
-Write the approved design to the spec file.
+Write the approved design to the Obsidian spec file under the canonical vault path (use injected remote/dir to determine org/project or sensible default; no question tool).
 
 **Spec Self-Review** (perform immediately after writing):
 1. Remove all placeholders ("TBD", "TODO") and vague language.
@@ -94,7 +100,7 @@ Write the approved design to the spec file.
 **User Review Gate**
 Once self-review passes, say:
 
-> "Spec written to `<path>`. Please review it and let me know if you want any changes before we create the implementation plan."
+> "Design spec written to the Obsidian vault at `<canonical path>/designs/...`. Please review it and let me know if you want any changes before we create the implementation plan."
 
 Only proceed to `writing-plans` after explicit user approval.
 
