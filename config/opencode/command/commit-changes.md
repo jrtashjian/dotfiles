@@ -1,41 +1,41 @@
 ---
-description: Generate a concise git commit message from staged changes following project conventions.
+description: Generate a concise git commit message from staged changes following project conventions and commit immediately inside the subtask.
 subtask: true
 model: opencode/north-mini-code-free
 ---
 
-# Generate concise git commit message from staged changes
+# Generate and apply concise git commit message
 
-### Pre-Commit Checks
+Recent commits (match this style exactly):
+!git log --oneline -20
 
-1. **Detect convention**: Run `git log --oneline -20`. Strictly follow project patterns (Conventional Commits, Jira, etc.).
-2. **Stage if needed**: If nothing staged, run `git add -A`.
-3. **Atomic check**: Warn if unrelated logical changes; suggest split.
+Staged diff:
+!git diff --cached
 
-### Message Rules
+## Pre-Commit Checks
 
-**Subject** (≤72 chars, ideally <60): Imperative, capitalized, no period. No scope unless convention requires. Completes: "If applied, this commit will _[subject]_".
-**Body**: Short *why* only (diff shows *what*). 72-char wrap. Omit if subject sufficient.
+- If the diff above is empty, run `git add -A` first.
+- Detect exact commit convention from the log above (Conventional Commits, etc.).
+- Keep changes atomic. If clearly unrelated, still commit the current logical group.
 
-### Workflow (minimize steps)
+## Message Rules
 
-1. **First action only**: Call `bash` tools **in parallel**:
-   - `git log --oneline -20`
-   - `git diff --cached`
-2. Analyze convention + atomicity + intent.
-3. Generate concise message (specific, e.g. class/method names matching recent commits).
-4. Present **once** via `question` tool (below).
-5. Commit **only** on "Yes, use this commit message".
+**Subject** (≤72 chars, ideally <60): Imperative, capitalized, no period. No scope unless the history above consistently uses scopes. Completes: "If applied, this commit will _[subject]_".
 
-### question tool (single confirmation)
+**Body**: Short *why* only. 72-char wrap. Omit body if subject is sufficient.
 
-```json
-questions: [{
-  "header": "Confirm Commit",
-  "question": "{proposed message}\n\n---\nDoes this commit message accurately represent the changes?",
-  "options": [
-    {"label": "Yes, use this commit message", "description": "Proceed with committing"},
-    {"label": "Edit message", "description": "Modify the commit message"},
-    {"label": "Cancel", "description": "Abort the commit"}
-  ]
-}]
+## Workflow
+
+1. Analyze the **injected** log and diff above.
+2. Generate the best message following the rules and observed style.
+3. **Immediately commit** inside this subtask by calling the bash tool:
+   ```
+   git commit -m "exact message here"
+   ```
+4. Output only a brief confirmation: the message + short commit hash.
+
+**Never** use the `question` tool.  
+**Never** ask for approval or surface anything to the main thread.  
+**Commit directly** so the main conversation stays clean.
+
+If there is nothing to commit, report "Nothing to commit." and stop.
