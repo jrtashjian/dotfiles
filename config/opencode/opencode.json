@@ -13,6 +13,32 @@
     "agent": {
         "explore": {
             "model": "opencode/deepseek-v4-flash-free"
+        },
+        "build": {
+            "permission": {
+                "task": {
+                    "*": "deny",
+                    "brainstorm": "allow",
+                    "code-review": "allow",
+                    "docs": "allow",
+                    "explore": "allow",
+                    "general": "allow"
+                }
+            }
+        },
+        "plan": {
+            "permission": {
+                "task": {
+                    "*": "deny",
+                    "brainstorm": "allow",
+                    "code-review": "allow",
+                    "docs": "allow",
+                    "explore": "allow"
+                }
+            }
         }
+    },
+    "compaction": {
+        "prune": true
     }
 }

@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: "Use this skill when you have an approved spec or requirements for a multi-step task. Create a detailed, actionable implementation plan before touching any code."
+description: "Use ONLY when you have an approved spec or requirements for a multi-step task. Create a detailed, actionable implementation plan before touching any code. Keywords: implementation plan, write plan, detailed plan, before coding, multi-step task."
 ---
 
 # Writing Plans

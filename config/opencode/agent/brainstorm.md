@@ -2,6 +2,7 @@
 description: "Turns vague ideas into clear, approved design specifications before any implementation work begins. Use this subagent for any new feature, component, or behavioral change."
 mode: subagent
 model: xai/grok-4.3
+steps: 25
 permission:
   edit:
     "*": deny

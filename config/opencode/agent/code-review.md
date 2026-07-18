@@ -3,6 +3,7 @@ description: Adversarial code review of a diff or PR. Surface real bugs the auth
 mode: subagent
 model: xai/grok-4.5
 temperature: 0.1
+steps: 25
 permission:
   edit: deny
   bash:

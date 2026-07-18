@@ -1,6 +1,6 @@
 ---
 name: pr-review-comments
-description: Fetch only unresolved (open) review threads from the current GitHub Pull Request and output them directly as clean markdown.
+description: "Use ONLY when fetching or reviewing unresolved GitHub PR review comments/threads. Fetch only unresolved (open) review threads from the current GitHub Pull Request and output them directly as clean markdown. Keywords: pr review, review comments, github pr, unresolved threads."
 ---
 
 ## What I Do

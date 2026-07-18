@@ -1,6 +1,6 @@
 ---
 name: project-documentation
-description: Use this skill when the user wants to create, maintain, or update structured documentation for code projects in their Obsidian vault. Organizes notes under ~/Documents/Obsidian/Personal Vault/code/ in GitHub-style {org}/{project} paths, builds a central hub/MOC (index.md), captures new learnings and updated understandings, and maintains focused, cross-linked Markdown files for references and explanations.
+description: "Use ONLY when creating, maintaining, or updating structured Obsidian documentation for code projects. Organizes notes under ~/Documents/Obsidian/Personal Vault/code/ in GitHub-style {org}/{project} paths. Keywords: document this, explain how, I learned that, new understanding, update project notes, obsidian docs, capture learnings, project documentation."
 ---
 
 # Project Documentation Skill (Obsidian + GitHub Hierarchy)

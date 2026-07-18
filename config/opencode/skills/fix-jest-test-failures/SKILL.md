@@ -1,6 +1,6 @@
 ---
 name: fix-jest-test-failures
-description: Runs Jest tests silently and returns only failing test details. Empty output means all tests are passing. Re-run only after meaningful fixes.
+description: "Use ONLY after making changes that are likely to resolve Jest test failures. Runs Jest tests silently and returns only failing test details. Empty output means all tests are passing. Keywords: fix jest, test failures, jest test, failing tests."
 ---
 
 # Fix Jest Test Failures
