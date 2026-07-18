@@ -28,14 +28,27 @@ Staged diff:
 
 1. Analyze the **injected** log and diff above.
 2. Generate the best message following the rules and observed style.
-3. **Immediately commit** inside this subtask by calling the bash tool:
-   ```
-   git commit -m "exact message here"
-   ```
-4. Output only a brief confirmation: the message + short commit hash.
+3. If there are changes:
+   - Run the commit with bash:
+     ```
+     git commit -m "your exact message"
+     ```
+   - Then capture the hash: run `git rev-parse --short HEAD`
+   - Use that short hash.
+4. After the commit (or if nothing to commit), your **final output must be exactly one line** in this format and nothing else:
+
+`<short-hash>: <message>`
+
+Examples:
+- `a1b2c3d: Update commit-changes.md syntax formatting`
+- `Nothing to commit.`
+
+**Strict rules for final output:**
+- Output **only** that single line.
+- No other text, no explanations, no "Plan complete", no tool calls after the hash capture.
+- Do not run any bash commands after capturing the hash.
+- This is the complete message that will be shown in the main thread.
 
 **Never** use the `question` tool.  
 **Never** ask for approval or surface anything to the main thread.  
 **Commit directly** so the main conversation stays clean.
-
-If there is nothing to commit, report "Nothing to commit." and stop.
