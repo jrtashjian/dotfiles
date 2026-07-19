@@ -6,36 +6,34 @@ model: opencode/north-mini-code-free
 
 # Generate and apply concise git commit message
 
-Recent commits (match this style exactly):
-!git log --oneline -20
-
-Staged diff:
-!git diff --cached
-
 ## Pre-Commit Checks
 
-- If the diff above is empty, run `git add -A` first.
-- Detect exact commit convention from the log above (Conventional Commits, etc.).
+- First, run these commands using the bash tool (in parallel if possible):
+  - `git log --oneline -20`
+  - `git diff --cached`
+- If the diff is empty, run `git add -A` first, then re-run the above commands.
+- Detect exact commit convention from the git log output (Conventional Commits, etc.).
 - Keep changes atomic. If clearly unrelated, still commit the current logical group.
 
 ## Message Rules
 
-**Subject** (≤72 chars, ideally <60): Imperative, capitalized, no period. No scope unless the history above consistently uses scopes. Completes: "If applied, this commit will _[subject]_".
+**Subject** (≤72 chars, ideally <60): Imperative, capitalized, no period. No scope unless the git log output consistently uses scopes. Completes: "If applied, this commit will _[subject]_".
 
 **Body**: Short *why* only. 72-char wrap. Omit body if subject is sufficient.
 
 ## Workflow
 
-1. Analyze the **injected** log and diff above.
-2. Generate the best message following the rules and observed style.
-3. If there are changes:
+1. Run the pre-check commands (git log and git diff, or git add -A first if needed) using the bash tool.
+2. Analyze the command output.
+3. Generate the best message following the rules and observed style.
+4. If there are changes:
    - Run the commit with bash:
      ```
      git commit -m "your exact message"
      ```
-   - Then capture the hash: run `git rev-parse --short HEAD`
+   - Then capture the hash by running `git rev-parse --short HEAD`.
    - Use that short hash.
-4. After the commit (or if nothing to commit), your **final output must be exactly one line** in this format and nothing else:
+5. After the commit (or if nothing to commit), your **final output must be exactly one line** in this format and nothing else:
 
 `<short-hash>: <message>`
 
