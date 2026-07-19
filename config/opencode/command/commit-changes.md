@@ -7,10 +7,10 @@ model: opencode/north-mini-code-free
 # Generate and apply concise git commit message
 
 Recent commits (match this style exactly):
-!`git log --oneline -20`
+!git log --oneline -20
 
 Staged diff:
-!`git diff --cached`
+!git diff --cached
 
 ## Pre-Commit Checks
 
