@@ -93,9 +93,9 @@ created: YYYY-MM-DD
 
 ### Wikilink conventions
 
-- Link to related notes: `[[projects/{name}/components/Component Name|Component Name]]`
-- Link to domains: `[[domains/{tech}/{Tech Name}|Tech Name]]`
-- Link back to project: `[[projects/{name}/{name}|project-name]]`
+- Link to related notes: `"[[projects/{name}/components/Component Name|Component Name]]"`
+- Link to domains: `"[[domains/{tech}/{Tech Name}|Tech Name]]"`
+- Link back to project: `"[[projects/{name}/{name}|project-name]]"`
 
 ### Note templates
 
@@ -108,8 +108,10 @@ project: "[[projects/{name}/{name}]]"
 created: {date}
 status: active
 layer: ""
-depends-on: []
-depended-on-by: []
+depends-on:
+  - "[[projects/{name}/components/Component Name|Component Name]]"
+depended-on-by:
+  - "[[projects/{name}/components/Component Name|Component Name]]"
 key-files: []
 ---
 ```
