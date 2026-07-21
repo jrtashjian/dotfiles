@@ -7,7 +7,7 @@
     "lsp": true,
     "permission": {
         "external_directory": {
-            "~/Documents/Obsidian/Personal Vault/code/**": "allow"
+            "~/Documents/Obsidian/Personal Vault/Agent Memory/**": "allow"
         }
     },
     "agent": {
@@ -18,11 +18,10 @@
             "permission": {
                 "task": {
                     "*": "deny",
-                    "brainstorm": "allow",
-                    "code-review": "allow",
-                    "docs": "allow",
-                    "explore": "allow",
-                    "general": "allow"
+                     "brainstorm": "allow",
+                     "code-review": "allow",
+                     "explore": "allow",
+                     "general": "allow"
                 }
             }
         },
@@ -30,10 +29,9 @@
             "permission": {
                 "task": {
                     "*": "deny",
-                    "brainstorm": "allow",
-                    "code-review": "allow",
-                    "docs": "allow",
-                    "explore": "allow"
+                     "brainstorm": "allow",
+                     "code-review": "allow",
+                     "explore": "allow"
                 }
             }
         }

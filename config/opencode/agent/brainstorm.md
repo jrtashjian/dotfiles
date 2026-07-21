@@ -46,7 +46,7 @@ You MUST complete these tasks in order:
 5. **Write design doc** — save to the Obsidian vault. Parse injected remote/pwd for {org}/{project} (sensible default if unclear, e.g. local/ from dir). Save to `~/Documents/Obsidian/Personal Vault/code/{org}/{project}/designs/YYYY-MM-DD-<topic>-design.md`. Never use question tool.
 6. **Spec self-review** — fix placeholders, contradictions, ambiguity, or scope issues inline.
 7. **User reviews written spec** — ask user to review the file before proceeding.
-8. **Transition to implementation** — invoke only the `writing-plans` skill.
+8. **Transition to implementation** — invoke only the `obsidian-agent-memory` skill.
 
 ## Process Flow
 
@@ -60,7 +60,7 @@ digraph brainstorming {
     "Write design doc" [shape=box];
     "Spec self-review" [shape=box];
     "User reviews spec?" [shape=diamond];
-    "Invoke writing-plans" [shape=doublecircle];
+     "Invoke obsidian-agent-memory" [shape=doublecircle];
 
     "Explore project context" -> "Ask clarifying questions";
     "Ask clarifying questions" -> "Propose 2-3 approaches";
@@ -71,11 +71,11 @@ digraph brainstorming {
     "Write design doc" -> "Spec self-review";
     "Spec self-review" -> "User reviews spec?";
     "User reviews spec?" -> "Write design doc" [label="changes requested"];
-    "User reviews spec?" -> "Invoke writing-plans" [label="approved"];
+     "User reviews spec?" -> "Invoke obsidian-agent-memory" [label="approved"];
 }
 ```
 
-**Terminal state**: Invoke `writing-plans` skill only.
+**Terminal state**: Invoke `obsidian-agent-memory` skill only.
 
 ## Core Process Rules
 
@@ -102,7 +102,7 @@ Once self-review passes, say:
 
 > "Design spec written to the Obsidian vault at `<canonical path>/designs/...`. Please review it and let me know if you want any changes before we create the implementation plan."
 
-Only proceed to `writing-plans` after explicit user approval.
+Only proceed to `obsidian-agent-memory` after explicit user approval.
 
 ## Key Principles
 - One question at a time

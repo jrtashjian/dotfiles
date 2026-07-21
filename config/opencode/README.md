@@ -16,7 +16,7 @@ Personal global configuration at `~/.config/opencode/` (symlinked from dotfiles)
 | explore       | `opencode/deepseek-v4-flash-free` | Fast codebase exploration     |
 | brainstorm    | `xai/grok-4.3`                 | Design & planning                |
 | code-review   | `xai/grok-4.5`                 | Rigorous adversarial reviews     |
-| commit        | free mini/flash (subtask)      | Commit message generation        |
+| commit        | free mini/flash (subtask)      | Direct commit with minimal output        |
 
 ## Custom Subagents
 
@@ -26,7 +26,7 @@ Invoke via `@name` or let primaries call them.
   Turns vague ideas into approved designs before any code.  
   - Model: grok-4.3  
   - Edit limited to `docs/**` only  
-  - Chains to `writing-plans` skill after approval  
+  - Chains to `obsidian-agent-memory` skill after approval  
   - Steps capped at 25
 
 - **@code-review**  
@@ -36,27 +36,20 @@ Invoke via `@name` or let primaries call them.
   - Bash: git/rg/grep only  
   - Steps capped at 25
 
-- **@docs**  
-  Self-contained specialist for all Obsidian vault project documentation (create, update, review, explain, capture learnings).  
-  - Model: grok-4.3  
-  - Unrestricted write access to `~/Documents/Obsidian/Personal Vault/code/**` (no confirmation on writes)  
-  - Single agent — no competing skill  
-  - Keeps heavy PKM context isolated in its own session
-
 ## Custom Commands
 
 - **/commit-changes**  
-  Analyzes staged diff + recent commits, proposes conventional message.  
-  - Runs as isolated subtask (`subtask: true`)  
-  - Uses free model  
-  - Uses `question` tool for single confirmation before commit
+  Analyzes staged changes + recent commits using git commands inside an isolated subtask, then commits directly.  
+  - Runs as subtask (`subtask: true`) with free model  
+  - Runs `git log`, `git diff`, `git add` (if needed), `git commit`, and `git rev-parse` inside the subtask  
+  - Final output is exactly one line: `<short-hash>: <message>` (no confirmation step, no extra text)
 
 ## Key Efficiency Settings
 
 - **AGENTS.md** (global): Very short. Core principles + "load `clean-code` skill for substantial edits". Full rules live in skills.
 - **compaction.prune: true**: Drops stale tool output from long sessions.
 - **steps** limits on subagents: Hard cap on agentic iterations.
-- **task permissions** on `build`/`plan`: Only our focused subagents (`brainstorm`, `code-review`, `docs`, `explore`, `general`) are auto-allowed. Unknowns denied (still usable via `@`).
+- **task permissions** on `build`/`plan`: Only our focused subagents (`brainstorm`, `code-review`, `explore`, `general`) are auto-allowed. Unknowns denied (still usable via `@`).
 - Skill descriptions gated with "Use ONLY when..." + keywords to prevent unnecessary loads.
 
 External clean-code / clean-architecture / refactoring skills are left untouched (pulled from external source).
@@ -68,9 +61,9 @@ External clean-code / clean-architecture / refactoring skills are left untouched
 2. Describe the idea.
 3. `@brainstorm` (or let it decide).
 4. Iterate until design approved and spec written.
-5. `writing-plans` skill is invoked automatically at end.
-6. Switch back to build and implement from the plan.
-7. Use `@docs` if you want to capture learnings in Obsidian.
+  5. `obsidian-agent-memory` skill is invoked automatically at end.
+  6. Switch back to build and implement from the plan.
+  7. Use `obsidian-agent-memory` skill (or mention "obsidian memory", "obsidian vault") to capture learnings, orient, or write to persistent agent memory in Obsidian.
 
 ### Code review before PR or after big changes
 - `@code-review` (or mention the diff/PR).
@@ -81,16 +74,20 @@ After edits:
 ```
 /commit-changes
 ```
-- It stages if needed, follows project commit style from `git log`, proposes message.
-- Confirm with "Yes, use this commit message".
+- Runs as isolated subtask (`subtask: true`) with free model.
+- Stages if needed, follows project commit style from `git log`.
+- Commits directly inside the subtask.
+- Main thread receives only the one-line result: `<short-hash>: <message>`.
 
-### Document, update, or review a system in Obsidian
-- `@docs document how authentication works`
-- `@docs review the documentation for the payment flow`
-- Or: "Record this new understanding about the data flow" or "help me understand the project from the docs"
-- The agent detects the project from git, maintains the canonical structure under `~/Documents/Obsidian/Personal Vault/code/...`, and can review/improve existing docs directly (no confirmation needed for writes).
-- Use @docs for documentation-related review and understanding instead of @explore.
-- Implementation plans (from writing-plans skill) and design specs are now saved directly into the Obsidian vault under `/plans/` and `/designs/` respectively (using sensible project detection).
+### Persistent Obsidian Agent Memory
+- The `obsidian-agent-memory` skill provides graph-structured persistent memory across sessions using `~/Documents/Obsidian/Personal Vault/Agent Memory/`.
+- Auto-orients at session start by detecting project and reading relevant notes if present.
+- Auto-scaffolds project structure on first run.
+- Use when: "use obsidian memory", "check the vault", "write this discovery to obsidian", etc.
+- On "I'm done", offers to write session summary.
+- Writes components, ADRs, sessions using frontmatter + wikilinks.
+- Design specs from brainstorm and implementation plans are written via this skill to the Agent Memory vault (projects/, sessions/).
+- Use for agent orientation, component notes, ADRs, session summaries, and cross-session memory.
 
 ### Quick codebase exploration (cheap)
 - `@explore find all places that call the payment service`
