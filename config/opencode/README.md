@@ -9,13 +9,14 @@ Personal global configuration at `~/.config/opencode/` (symlinked from dotfiles)
 
 ## Model Routing
 
-| Slot          | Model                          | Purpose                          |
-|---------------|--------------------------------|----------------------------------|
-| `model`       | `xai/grok-build-0.1`           | Daily coding (build/plan)        |
-| `small_model` | `opencode/north-mini-code-free`| Titles, summaries, light tasks   |
-| explore       | `opencode/deepseek-v4-flash-free` | Fast codebase exploration     |
-| code-review   | `xai/grok-4.5`                 | Rigorous adversarial reviews     |
-| commit        | free mini/flash (subtask)      | Direct commit with minimal output        |
+| Slot          | Model                               | Purpose                          |
+|---------------|-------------------------------------|----------------------------------|
+| build         | `opencode/big-pickle`               | Daily coding (default)           |
+| plan          | `xai/grok-4.5`                      | Design & planning                |
+| `small_model` | `opencode/north-mini-code-free`     | Titles, summaries, light tasks   |
+| explore       | `opencode/deepseek-v4-flash-free`   | Fast codebase exploration        |
+| code-review   | `xai/grok-4.5`                      | Rigorous adversarial reviews     |
+| commit        | `opencode/deepseek-v4-flash-free`   | Direct commit with minimal output|
 
 ## Custom Subagents
 
@@ -32,7 +33,7 @@ Invoke via `@name` or let primaries call them.
 
 - **/commit-changes**  
   Analyzes staged changes + recent commits using git commands inside an isolated subtask, then commits directly.  
-  - Runs as subtask (`subtask: true`) with free model  
+  - Runs as subtask (`subtask: true`) with `opencode/deepseek-v4-flash-free` 
   - Runs `git log`, `git diff`, `git add` (if needed), `git commit`, and `git rev-parse` inside the subtask  
   - Final output is exactly one line: `<short-hash>: <message>` (no confirmation step, no extra text)
 
@@ -64,7 +65,7 @@ After edits:
 ```
 /commit-changes
 ```
-- Runs as isolated subtask (`subtask: true`) with free model.
+- Runs as isolated subtask (`subtask: true`) with deepseek-v4-flash-free.
 - Stages if needed, follows project commit style from `git log`.
 - Commits directly inside the subtask.
 - Main thread receives only the one-line result: `<short-hash>: <message>`.
@@ -81,7 +82,7 @@ After edits:
 
 ### Quick codebase exploration (cheap)
 - `@explore find all places that call the payment service`
-- Uses the free flash model.
+- Uses deepseek-v4-flash-free.
 
 ### Fix tests
 - Make changes.
