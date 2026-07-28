@@ -1,7 +1,7 @@
 ---
 description: Generate a concise git commit message from staged changes following project conventions and commit immediately inside the subtask.
 subtask: true
-model: opencode/north-mini-code-free
+model: opencode/deepseek-v4-flash-free
 ---
 
 # Generate and apply concise git commit message
