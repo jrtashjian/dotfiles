@@ -14,20 +14,12 @@ Personal global configuration at `~/.config/opencode/` (symlinked from dotfiles)
 | `model`       | `xai/grok-build-0.1`           | Daily coding (build/plan)        |
 | `small_model` | `opencode/north-mini-code-free`| Titles, summaries, light tasks   |
 | explore       | `opencode/deepseek-v4-flash-free` | Fast codebase exploration     |
-| brainstorm    | `xai/grok-4.3`                 | Design & planning                |
 | code-review   | `xai/grok-4.5`                 | Rigorous adversarial reviews     |
 | commit        | free mini/flash (subtask)      | Direct commit with minimal output        |
 
 ## Custom Subagents
 
 Invoke via `@name` or let primaries call them.
-
-- **@brainstorm**  
-  Turns vague ideas into approved designs before any code.  
-  - Model: grok-4.3  
-  - Edit limited to `docs/**` only  
-  - Chains to `obsidian-agent-memory` skill after approval  
-  - Steps capped at 25
 
 - **@code-review**  
   Adversarial review focused on real high-impact bugs.  
@@ -49,7 +41,7 @@ Invoke via `@name` or let primaries call them.
 - **AGENTS.md** (global): Very short. Core principles + "load `clean-code` skill for substantial edits". Full rules live in skills.
 - **compaction.prune: true**: Drops stale tool output from long sessions.
 - **steps** limits on subagents: Hard cap on agentic iterations.
-- **task permissions** on `build`/`plan`: Only our focused subagents (`brainstorm`, `code-review`, `explore`, `general`) are auto-allowed. Unknowns denied (still usable via `@`).
+- **task permissions** on `build`/`plan`: Only our focused subagents (`code-review`, `explore`, `general`) are auto-allowed. Unknowns denied (still usable via `@`).
 - Skill descriptions gated with "Use ONLY when..." + keywords to prevent unnecessary loads.
 
 External clean-code / clean-architecture / refactoring skills are left untouched (pulled from external source).
@@ -57,13 +49,11 @@ External clean-code / clean-architecture / refactoring skills are left untouched
 ## Common Workflows
 
 ### Start a new feature or change
-1. (Optional) Tab to `plan` or stay in `build`.
-2. Describe the idea.
-3. `@brainstorm` (or let it decide).
-4. Iterate until design approved and spec written.
-  5. `obsidian-agent-memory` skill is invoked automatically at end.
-  6. Switch back to build and implement from the plan.
-  7. Use `obsidian-agent-memory` skill (or mention "obsidian memory", "obsidian vault") to capture learnings, orient, or write to persistent agent memory in Obsidian.
+1. Tab to `plan` mode.
+2. Describe the idea; iterate until the design/approach is solid.
+3. Optionally capture the design via `obsidian-agent-memory`.
+4. Tab back to `build` and implement from the plan.
+5. Use `obsidian-agent-memory` (or mention "obsidian memory", "obsidian vault") to capture learnings or write session notes.
 
 ### Code review before PR or after big changes
 - `@code-review` (or mention the diff/PR).
@@ -86,7 +76,7 @@ After edits:
 - Use when: "use obsidian memory", "check the vault", "write this discovery to obsidian", etc.
 - On "I'm done", offers to write session summary.
 - Writes components, ADRs, sessions using frontmatter + wikilinks.
-- Design specs from brainstorm and implementation plans are written via this skill to the Agent Memory vault (projects/, sessions/).
+- Design specs from plan mode and implementation notes go to the Agent Memory vault (projects/, sessions/).
 - Use for agent orientation, component notes, ADRs, session summaries, and cross-session memory.
 
 ### Quick codebase exploration (cheap)
