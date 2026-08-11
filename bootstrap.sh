@@ -70,6 +70,7 @@ files_to_symlink=(
     "$DOTFILES_PATH/config/zsh/.zshrc:$HOME/.zshrc"
     "$DOTFILES_PATH/config/zsh/.aliases:$HOME/.aliases"
     "$DOTFILES_PATH/config/starship.toml:$HOME/.config/starship.toml"
+    "$DOTFILES_PATH/config/git/ssh-sign:$HOME/.local/bin/git-ssh-sign"
 )
 
 # Copy each file if target doesn't exist
