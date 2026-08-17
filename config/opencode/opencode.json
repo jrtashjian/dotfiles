@@ -1,8 +1,8 @@
 {
     "$schema": "https://opencode.ai/config.json",
     "autoupdate": "notify",
-    "model": "xai/grok-build-0.1",
-    "small_model": "opencode/ling-3.0-tiny-free",
+    "model": "opencode/deepseek-v4-flash-free",
+    "small_model": "opencode/hy3-free",
     "formatter": true,
     "lsp": true,
     "permission": {
@@ -12,13 +12,13 @@
     },
     "agent": {
         "build": {
-            "model": "xai/grok-build-0.1"
+            "model": "opencode/deepseek-v4-flash-free"
         },
         "plan": {
-            "model": "xai/grok-4.5"
+            "model": "xai/grok-4.6"
         },
         "explore": {
-            "model": "opencode/nemotron-3.5-lightning-free"
+            "model": "opencode-go/deepseek-v4-flash"
         }
     },
     "compaction": {

@@ -2,7 +2,7 @@
 
 Personal global configuration at `~/.config/opencode/` (symlinked from dotfiles) focused on:
 
-- Cost efficiency using free Zen models for routine work + xAI paid models for specialists
+- Cost efficiency using free Zen models for daily build + xAI/Go for specialists
 - Single-purpose subagents and skills to keep sessions short and token-efficient
 - Stock `build`/`plan` primaries (no core changes)
 - Minimal always-on context; heavy details loaded on-demand via skills
@@ -11,12 +11,12 @@ Personal global configuration at `~/.config/opencode/` (symlinked from dotfiles)
 
 | Slot          | Model                                      | Purpose                          |
 |---------------|--------------------------------------------|----------------------------------|
-| build         | `xai/grok-build-0.1`                       | Daily coding (default)           |
-| plan          | `xai/grok-4.5`                             | Design & planning                |
-| `small_model` | `opencode/ling-3.0-tiny-free`              | Titles, summaries, light tasks   |
-| explore       | `opencode/nemotron-3.5-lightning-free`     | Fast codebase exploration        |
-| code-review   | `xai/grok-4.5`                             | Rigorous adversarial reviews     |
-| commit        | `opencode/nemotron-3.5-lightning-free`     | Direct commit with minimal output|
+| build         | `opencode/deepseek-v4-flash-free`          | Daily coding (default)           |
+| plan          | `xai/grok-4.6`                             | Design & planning                |
+| `small_model` | `opencode/hy3-free`                        | Titles, summaries, light tasks   |
+| explore       | `opencode-go/deepseek-v4-flash`            | Fast codebase exploration        |
+| code-review   | `xai/grok-4.6`                             | Rigorous adversarial reviews     |
+| commit        | `opencode-go/deepseek-v4-flash`            | Direct commit with minimal output|
 
 ## Custom Subagents
 
@@ -24,7 +24,7 @@ Invoke via `@name` or let primaries call them.
 
 - **@code-review**  
   Adversarial review focused on real high-impact bugs.  
-  - Model: grok-4.5 (cold, precise)  
+  - Model: grok-4.6 (cold, precise)  
   - Edit: fully denied  
   - Bash: git/rg/grep only  
   - Steps capped at 25
@@ -33,7 +33,7 @@ Invoke via `@name` or let primaries call them.
 
 - **/commit-changes**  
   Analyzes staged changes + recent commits using git commands inside an isolated subtask, then commits directly.  
-  - Runs as subtask (`subtask: true`) with `opencode/nemotron-3.5-lightning-free`
+  - Runs as subtask (`subtask: true`) with `opencode-go/deepseek-v4-flash`
   - Runs `git log`, `git diff`, `git add` (if needed), `git commit`, and `git rev-parse` inside the subtask  
   - Final output is exactly one line: `<short-hash>: <message>` (no confirmation step, no extra text)
 
@@ -65,7 +65,7 @@ After edits:
 ```
 /commit-changes
 ```
-- Runs as isolated subtask (`subtask: true`) with nemotron-3.5-lightning-free.
+- Runs as isolated subtask (`subtask: true`) with deepseek-v4-flash (Go).
 - Stages if needed, follows project commit style from `git log`.
 - Commits directly inside the subtask.
 - Main thread receives only the one-line result: `<short-hash>: <message>`.
@@ -82,7 +82,7 @@ After edits:
 
 ### Quick codebase exploration (cheap)
 - `@explore find all places that call the payment service`
-- Uses nemotron-3.5-lightning-free.
+- Uses deepseek-v4-flash (Go).
 
 ### Fix tests
 - Make changes.
@@ -90,7 +90,7 @@ After edits:
 
 ## Notes
 
-- All model choices are only Zen free + xAI (no other providers).
+- Models are Zen free (build/titles), OpenCode Go (explore/commit), and xAI (plan/review).
 - Subagents run in child sessions so their context doesn't pollute the main thread.
 - Skills are procedures, not model routers — model selection happens at the agent/command level.
 - Restart OpenCode after config changes for them to take effect.

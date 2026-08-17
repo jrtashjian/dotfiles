@@ -1,7 +1,7 @@
 ---
 description: Generate a concise git commit message from staged changes following project conventions and commit immediately inside the subtask.
 subtask: true
-model: opencode/nemotron-3.5-lightning-free
+model: opencode-go/deepseek-v4-flash
 ---
 
 # Generate and apply concise git commit message
