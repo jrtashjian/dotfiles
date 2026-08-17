@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: MyAddon
+## Notes: Example classic addon skeleton
+## Author: YourName
+## Version: 1.0.0
+## SavedVariables: MyAddonDB
+MyAddon.xml
+MyAddon.lua
