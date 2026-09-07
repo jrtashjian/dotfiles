@@ -153,7 +153,7 @@ install_packages() {
             echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
             sudo apt update -qqq
-            sudo apt install -y git zsh tmux gh jq ripgrep fd-find
+            sudo apt install -y git zsh tmux gh jq ripgrep fd-find wl-clipboard
 
             # Install latest version of Neovim
             curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
