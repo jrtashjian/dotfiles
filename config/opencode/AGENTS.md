@@ -7,6 +7,7 @@ Working code is not automatically clean code.
 - Keep the happy path readable; isolate error and edge handling.
 - No secrets in code, logs, or commits. Run relevant lint/typecheck/tests before calling work done.
 - Do not broaden the task beyond the smallest change that makes the request safe and readable.
+- Before writing or editing prose, load the `unslop` skill.
 
 ## On demand
 
