@@ -1,16 +1,20 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "autoupdate": "notify",
+    "update": "notify",
     "model": "opencode-go/deepseek-v4-flash",
-    "small_model": "opencode/hy3-free",
     "formatter": true,
     "lsp": true,
-    "permission": {
-        "external_directory": {
-            "~/Documents/Obsidian/Personal Vault/Agent Memory/**": "allow"
+    "permissions": [
+        {
+            "action": "external_directory",
+            "resource": "~/Documents/Obsidian/Personal Vault/Agent Memory/*",
+            "effect": "allow"
         }
-    },
-    "agent": {
+    ],
+    "agents": {
+        "title": {
+            "model": "opencode/hy3-free"
+        },
         "build": {
             "model": "opencode-go/deepseek-v4-flash"
         },
@@ -21,13 +25,12 @@
             "model": "opencode-go/deepseek-v4-flash"
         }
     },
-    "compaction": {
-        "prune": true
-    },
     "mcp": {
-        "playwright": {
-            "type": "local",
-            "command": ["npx", "@playwright/mcp@latest", "--browser", "chromium"]
+        "servers": {
+            "playwright": {
+                "type": "local",
+                "command": ["npx", "@playwright/mcp@latest", "--browser", "chromium"]
+            }
         }
     }
 }

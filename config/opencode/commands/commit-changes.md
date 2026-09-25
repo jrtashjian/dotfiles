@@ -1,6 +1,6 @@
 ---
 description: Generate a concise git commit message from staged changes following project conventions and commit immediately inside the subtask.
-subtask: true
+subagent: true
 model: opencode-go/deepseek-v4-flash
 ---
 
