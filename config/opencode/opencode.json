@@ -32,5 +32,10 @@
                 "command": ["npx", "@playwright/mcp@latest", "--browser", "chromium"]
             }
         }
+    },
+    "providers": {
+        "ollama": {
+            "baseURL": "http://localhost:11434"
+        }
     }
 }
