@@ -1,6 +1,6 @@
 ---
 name: clean-code
-description: Enforces mandatory Clean Code rules from Robert C. Martin for all code, tests, refactors, reviews, and documentation changes.
+description: Apply Robert C. Martin-inspired clean code rules when improving readability, naming, function design, responsibilities, or testable everyday code.
 ---
 
 # OBEY Clean Code by Robert C. Martin

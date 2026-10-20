@@ -1,6 +1,6 @@
 ---
 name: refactoring
-description: Enforces Martin Fowler's Refactoring discipline: small, behavior-preserving improvements to structure, duplication, names, and readability without mixing in functional changes.
+description: Apply Martin Fowler-inspired refactoring rules when improving existing code structure while preserving observable behavior.
 ---
 
 # OBEY Refactoring by Martin Fowler

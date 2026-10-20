@@ -1,8 +1,10 @@
 {
   "$schema": "https://opencode.ai/v2/cli.json",
-  "plugins": [ "./herdr-opencode" ],
   "tabs": {
     "layout": "vertical"
   },
-  "animations": true
+  "attention": {
+    "notifications": true
+  },
+  "highlights": false
 }

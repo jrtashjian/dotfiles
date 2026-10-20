@@ -1,41 +1,10 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "update": "notify",
-    "model": "opencode-go/deepseek-v4-flash",
     "formatter": true,
-    "lsp": true,
-    "permissions": [
-        {
-            "action": "external_directory",
-            "resource": "~/Documents/Obsidian/Personal Vault/Agent Memory/*",
-            "effect": "allow"
-        }
-    ],
+    "model": "opencode-go/deepseek-v4.1-flash",
     "agents": {
         "title": {
-            "model": "opencode/hy3-free"
-        },
-        "build": {
-            "model": "opencode-go/deepseek-v4-flash"
-        },
-        "plan": {
-            "model": "xai/grok-4.6"
-        },
-        "explore": {
-            "model": "opencode-go/deepseek-v4-flash"
-        }
-    },
-    "mcp": {
-        "servers": {
-            "playwright": {
-                "type": "local",
-                "command": ["npx", "@playwright/mcp@latest", "--browser", "chromium"]
-            }
-        }
-    },
-    "providers": {
-        "ollama": {
-            "baseURL": "http://localhost:11434"
+            "model": "opencode/nemotron-3.5-lightning-free"
         }
     }
 }

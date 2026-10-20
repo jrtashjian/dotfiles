@@ -1,6 +1,6 @@
 ---
 name: clean-architecture
-description: Enforces mandatory Clean Architecture rules from Robert C. Martin for dependency direction, layer separation, business rules independence, and replaceable details.
+description: Apply Robert C. Martin-inspired architecture rules when separating business policy from frameworks, databases, UI, or infrastructure details.
 ---
 
 # OBEY Clean Architecture by Robert C. Martin
