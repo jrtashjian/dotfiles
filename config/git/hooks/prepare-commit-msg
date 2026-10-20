@@ -63,7 +63,7 @@ EOF
 
 printf "🤖 Generating commit message...\n" >&2
 
-MESSAGE="$(opencode run "$(cat "$PROMPT_FILE")" 2>/dev/null || true)"
+MESSAGE="$(opencode run --standalone "$(cat "$PROMPT_FILE")" 2>/dev/null || true)"
 rm -f "$PROMPT_FILE"
 
 if [[ -n "$MESSAGE" ]]; then
