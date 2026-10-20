@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+COMMIT_MSG_FILE="$1"
+COMMIT_SOURCE="${2-}"
+
+# Skip merge/squash/amend
+case "$COMMIT_SOURCE" in
+    merge|squash|commit) exit 0 ;;
+esac
+
+# Run local hook first if it exists
+GIT_DIR="$(git rev-parse --git-dir 2>/dev/null || true)"
+if [[ -n "$GIT_DIR" && -x "$GIT_DIR/hooks/prepare-commit-msg" ]]; then
+    "$GIT_DIR/hooks/prepare-commit-msg" "$@" || exit $?
+fi
+
+# Skip if a real message already exists above the scissors line
+if awk '
+  /^# ------------------------ >8 ------------------------/ { exit }
+  /^[[:space:]]*[^[:space:]#]/ { found=1; exit }
+  END { exit !found }
+' "$COMMIT_MSG_FILE"; then
+    exit 0
+fi
+
+command -v opencode >/dev/null 2>&1 || exit 0
+
+PROMPT_FILE="$(mktemp)"
+cat > "$PROMPT_FILE" <<'EOF'
+Generate a Conventional Commits message from the staged changes.
+
+Format (strict):
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+
+Rules:
+- type: feat, fix, docs, style, refactor, perf, test, build, ci, chore, or revert
+- scope: optional noun in parentheses, e.g. feat(parser):
+- description: imperative mood, ≤72 chars (ideally <60), no trailing period
+- body: only if needed for the "why". Wrap at 72 chars. Start after a blank line.
+- breaking changes: use ! after type/scope and/or a BREAKING CHANGE: footer
+- Output ONLY the commit message. No code fences, no explanations, no extra text.
+- Do not make any tool calls or perform any git/file operations.
+
+Match the style of recent commits when possible (types, scopes, tone).
+
+Recent commits:
+EOF
+
+{
+    git log --oneline --no-decorate -n 20 2>/dev/null || true
+    echo
+    echo "Staged changes (numstat):"
+    git diff --staged --numstat 2>/dev/null || true
+    echo
+    echo "Staged diff:"
+    git diff --staged 2>/dev/null || true
+} >> "$PROMPT_FILE"
+
+printf "🤖 Generating commit message...\n" >&2
+
+MESSAGE="$(opencode run "$(cat "$PROMPT_FILE")" 2>/dev/null || true)"
+rm -f "$PROMPT_FILE"
+
+if [[ -n "$MESSAGE" ]]; then
+    MESSAGE="${MESSAGE%"${MESSAGE##*[![:space:]]}"}"
+    ORIGINAL="$(cat "$COMMIT_MSG_FILE")"
+    printf '%s\n%s\n' "$MESSAGE" "$ORIGINAL" > "$COMMIT_MSG_FILE"
+fi

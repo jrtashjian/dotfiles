@@ -6,6 +6,7 @@
 
 [core]
     editor = nvim
+    hooksPath = ~/.config/git/hooks
 
 [alias]
 	co = checkout
