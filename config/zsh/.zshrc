@@ -12,6 +12,7 @@ export EDITOR=nvim
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH" # opencode
 [[ -d "/opt/nvim-linux-x86_64/bin" ]] && export PATH="/opt/nvim-linux-x86_64/bin:$PATH" # Neovim
 [[ -d "/opt/homebrew/opt/ruby/bin" ]] && export PATH="/opt/homebrew/opt/ruby/bin:$PATH" # Homebrew Ruby
+[[ -d "$HOME/Library/Python/3.9/bin" ]] && export PATH="$HOME/Library/Python/3.9/bin:$PATH" # macOS - Python 3.9
 
 # Homebrew Zsh completions
 if command -v brew &>/dev/null; then
