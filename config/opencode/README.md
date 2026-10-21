@@ -37,8 +37,16 @@ OpenCode advertises each skill's description. The agent loads the body when the 
 
 Those five are the complete rule files from [Agent Rules Books](https://ciembor.github.io/agent-rules-books), inlined as `SKILL.md`. The upstream skill package loads the shorter `mini` file first and keeps the complete file as a reference. These copies load the complete file. The rules are inspired by the books, not official author or publisher material. Repository: [ciembor/agent-rules-books](https://github.com/ciembor/agent-rules-books).
 
+## Commands
+
+Commands are reusable prompts for repetitive tasks. In the TUI, type `/` and a command name to run the prompt saved for that command. Run one as a subagent when its work should stay out of the main session.
+
+| Command | Purpose | Subagent |
+|---------|---------|-----------|
+| `/commit` | Write a Conventional Commits message from the staged diff and commit | yes |
+
 ## MCP
 
-`chrome-devtools` is a local server started with `npx -y chrome-devtools-mcp@latest`. It connects automatically.
+`playwright` ([`@playwright/mcp`](https://github.com/microsoft/playwright-mcp)) is used when driving the browser through user journeys, such as opening pages, filling forms, scraping, or generating reusable tests. It reports page state as a compact accessibility-tree snapshot.
 
-[`chrome-devtools-mcp`](https://github.com/ChromeDevTools/chrome-devtools-mcp) drives and inspects Chrome through Puppeteer and Chrome DevTools. Use it to open pages, click, and fill forms, and to inspect console messages, network requests, CSS, screenshots, performance traces, Lighthouse, and heap snapshots. Automation and debugging share the same Chrome session.
+`chrome-devtools` ([`chrome-devtools-mcp`](https://github.com/ChromeDevTools/chrome-devtools-mcp)) is used when inspecting a live Chrome session for console errors, network requests, performance traces, memory, or Core Web Vitals.
