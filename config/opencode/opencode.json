@@ -6,5 +6,27 @@
         "title": {
             "model": "opencode/nemotron-3.5-lightning-free"
         }
+    },
+    "mcp": {
+        "servers": {
+            "playwright": {
+                "type": "local",
+                "command": [
+                    "npx",
+                    "-y",
+                    "@playwright/mcp@latest",
+                    "--browser",
+                    "chromium"
+                ]
+            },
+            "chrome-devtools": {
+                "type": "local",
+                "command": [
+                    "npx",
+                    "-y",
+                    "chrome-devtools-mcp@latest"
+                ]
+            }
+        }
     }
 }
