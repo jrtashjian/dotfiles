@@ -33,3 +33,6 @@ alias gd='git diff'
 alias gco='git checkout'
 alias gbr='git branch'
 alias gundo='git reset --soft HEAD~1' # Undo last commit but keep changes
+
+# OpenCode
+alias opencode-session-clear='opencode session list --format json | jq -r ".[].id" | xargs -r -n1 opencode session delete'
