@@ -229,8 +229,19 @@ install_opencode() {
     fi
 }
 
+# Allow the OpenCode mobile app to pair over the network
+allow_opencode_port() {
+    if command -v ufw >/dev/null 2>&1; then
+        echo "Allowing OpenCode port 49374/tcp..."
+        sudo ufw allow 49374/tcp comment 'opencode'
+    else
+        echo "ufw not found; skipping OpenCode firewall rule."
+    fi
+}
+
 # Main setup
 os=$(detect_os)
 install_packages "$os"
 install_node
 install_opencode
+allow_opencode_port
