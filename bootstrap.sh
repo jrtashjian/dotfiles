@@ -174,7 +174,7 @@ install_packages() {
             install_nerd_font
             ;;
         arch)
-            sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code 
+            sudo pacman -S --needed git zsh tmux neovim ghostty ttf-fira-code jq github-cli ripgrep fd wl-clipboard
 
             install_nerd_font
             ;;
@@ -220,11 +220,13 @@ install_node() {
     npm install -g chrome-devtools-mcp @playwright/mcp
 }
 
-# Install OpenCode
+# Install OpenCode if not already installed
 install_opencode() {
-    echo "Installing OpenCode..."
-    # --no-modify-path avoids duplicate PATH edits; .zshrc already adds ~/.opencode/bin
-    curl -fsSL https://opencode.ai/v2/install | bash -s -- --no-modify-path
+    if ! command -v opencode >/dev/null 2>&1 && [ ! -x "$HOME/.opencode/bin/opencode" ]; then
+        echo "Installing OpenCode..."
+        # --no-modify-path avoids duplicate PATH edits; .zshrc already adds ~/.opencode/bin
+        curl -fsSL https://opencode.ai/v2/install | bash -s -- --no-modify-path
+    fi
 }
 
 # Main setup
