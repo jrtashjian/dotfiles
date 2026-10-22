@@ -26,6 +26,7 @@ create_symlink() {
     if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
         echo "Symlink $target already exists and is correct."
     else
+        mkdir -p "$(dirname "$target")"
         rm -rf "$target"
         ln -snf "$source" "$target"
         echo "Created symlink $target -> $source"
@@ -182,20 +183,37 @@ install_packages() {
                 echo "Installing Starship..."
                 /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
             fi
-
-            # Set zsh as default shell for current user
-            if [ "$SHELL" != "/bin/zsh" ]; then
-                sudo chsh -s /bin/zsh "$USER"
-            fi
             ;;
         arch)
-            sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code nerd-fonts-fira-code
+            sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code 
+
+            # Install font only if not already installed
+            if ! fc-list :family | grep -i "firacode nerd font" >/dev/null 2>&1; then
+                echo "Installing Fira Code Nerd Font..."
+                mkdir /tmp/firacode
+                curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip -o /tmp/firacode/firacode.zip
+                unzip /tmp/firacode/firacode.zip -d /tmp/firacode
+                sudo mkdir -p "$HOME/.local/share/fonts"
+                sudo mv /tmp/firacode/*.ttf "$HOME/.local/share/fonts/"
+                rm -rf /tmp/firacode
+            fi
+
+            if ! command -v starship >/dev/null 2>&1; then
+                echo "Installing Starship..."
+                /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+            fi
             ;;
         *)
             echo "Error: No package installation defined for '$os'." >&2
             exit 1
             ;;
     esac
+
+    # Set zsh as the login shell for the current user
+    if [ "$SHELL" != "/bin/zsh" ]; then
+        echo "Setting zsh as the default shell..."
+        sudo chsh -s /bin/zsh "$USER"
+    fi
 }
 
 # Main setup
