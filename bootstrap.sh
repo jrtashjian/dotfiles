@@ -150,7 +150,7 @@ install_packages() {
                 echo "Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
-            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep fd
+            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep fd php composer
             ;;
         debian)
             # obtain sudo privileges upfront
@@ -163,7 +163,7 @@ install_packages() {
             echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
             sudo apt update -qqq
-            sudo apt install -y git zsh tmux gh jq ripgrep fd-find wl-clipboard
+            sudo apt install -y git zsh tmux gh jq ripgrep fd-find wl-clipboard php-cli composer
 
             # Install latest version of Neovim
             curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
@@ -174,7 +174,7 @@ install_packages() {
             install_nerd_font
             ;;
         arch)
-            sudo pacman -S --needed git zsh tmux neovim ghostty ttf-fira-code jq github-cli ripgrep fd wl-clipboard
+            sudo pacman -S --needed git zsh tmux neovim ghostty ttf-fira-code jq github-cli ripgrep fd wl-clipboard php composer
 
             install_nerd_font
             ;;
