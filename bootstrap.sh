@@ -126,6 +126,19 @@ detect_os() {
     esac
 }
 
+# Install the Fira Code Nerd Font if not already present
+install_nerd_font() {
+    if ! fc-list :family | grep -i "firacode nerd font" >/dev/null 2>&1; then
+        echo "Installing Fira Code Nerd Font..."
+        mkdir /tmp/firacode
+        curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip -o /tmp/firacode/firacode.zip
+        unzip /tmp/firacode/firacode.zip -d /tmp/firacode
+        sudo mkdir -p "$HOME/.local/share/fonts"
+        sudo mv /tmp/firacode/*.ttf "$HOME/.local/share/fonts/"
+        rm -rf /tmp/firacode
+    fi
+}
+
 # Install packages
 install_packages() {
     local os="$1"
@@ -138,10 +151,6 @@ install_packages() {
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
             brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep fd
-            if ! command -v starship >/dev/null 2>&1; then
-                echo "Installing Starship..."
-                /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
-            fi
             ;;
         debian)
             # obtain sudo privileges upfront
@@ -162,52 +171,24 @@ install_packages() {
             sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
             rm nvim-linux-x86_64.tar.gz
 
-            # Install the latest version of Zellij
-            wget https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz
-            tar -xzf zellij-x86_64-unknown-linux-musl.tar.gz
-            sudo install zellij /usr/local/bin/
-            rm zellij zellij-x86_64-unknown-linux-musl.tar.gz
-
-            # Install font only if not already installed
-            if ! fc-list :family | grep -i "firacode nerd font" >/dev/null 2>&1; then
-                echo "Installing Fira Code Nerd Font..."
-                mkdir /tmp/firacode
-                curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip -o /tmp/firacode/firacode.zip
-                unzip /tmp/firacode/firacode.zip -d /tmp/firacode
-                sudo mkdir -p "$HOME/.local/share/fonts"
-                sudo mv /tmp/firacode/*.ttf "$HOME/.local/share/fonts/"
-                rm -rf /tmp/firacode
-            fi
-
-            if ! command -v starship >/dev/null 2>&1; then
-                echo "Installing Starship..."
-                /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
-            fi
+            install_nerd_font
             ;;
         arch)
             sudo pacman -S --needed git zsh neovim ghostty ttf-fira-code 
 
-            # Install font only if not already installed
-            if ! fc-list :family | grep -i "firacode nerd font" >/dev/null 2>&1; then
-                echo "Installing Fira Code Nerd Font..."
-                mkdir /tmp/firacode
-                curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip -o /tmp/firacode/firacode.zip
-                unzip /tmp/firacode/firacode.zip -d /tmp/firacode
-                sudo mkdir -p "$HOME/.local/share/fonts"
-                sudo mv /tmp/firacode/*.ttf "$HOME/.local/share/fonts/"
-                rm -rf /tmp/firacode
-            fi
-
-            if ! command -v starship >/dev/null 2>&1; then
-                echo "Installing Starship..."
-                /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
-            fi
+            install_nerd_font
             ;;
         *)
             echo "Error: No package installation defined for '$os'." >&2
             exit 1
             ;;
     esac
+
+    # Install Starship on all platforms
+    if ! command -v starship >/dev/null 2>&1; then
+        echo "Installing Starship..."
+        /bin/sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes
+    fi
 
     # Set zsh as the login shell for the current user
     if [ "$SHELL" != "/bin/zsh" ]; then
