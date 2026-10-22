@@ -239,7 +239,15 @@ install_node() {
     npm install -g chrome-devtools-mcp @playwright/mcp
 }
 
+# Install OpenCode
+install_opencode() {
+    echo "Installing OpenCode..."
+    # --no-modify-path avoids duplicate PATH edits; .zshrc already adds ~/.opencode/bin
+    curl -fsSL https://opencode.ai/v2/install | bash -s -- --no-modify-path
+}
+
 # Main setup
 os=$(detect_os)
 install_packages "$os"
 install_node
+install_opencode
