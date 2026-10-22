@@ -216,6 +216,30 @@ install_packages() {
     fi
 }
 
+# Install NVM, the latest Node.js LTS, and global npm packages
+install_node() {
+    export NVM_DIR="$HOME/.nvm"
+
+    if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+        echo "Installing NVM..."
+        # PROFILE=/dev/null skips modifying shell profiles; .zshrc already sources NVM
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | PROFILE=/dev/null bash
+    fi
+
+    # Load NVM into the current shell
+    # shellcheck disable=SC1091
+    \. "$NVM_DIR/nvm.sh"
+
+    echo "Installing latest Node.js LTS..."
+    nvm install --lts
+    nvm alias default 'lts/*'
+    nvm use default
+
+    echo "Installing global npm packages..."
+    npm install -g chrome-devtools-mcp @playwright/mcp
+}
+
 # Main setup
 os=$(detect_os)
 install_packages "$os"
+install_node
