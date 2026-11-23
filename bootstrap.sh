@@ -150,7 +150,7 @@ install_packages() {
                 echo "Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
-            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep fd php composer
+            brew install git zsh tmux neovim ghostty font-fira-code-nerd-font jq gh ripgrep fd php composer tree-sitter-cli
             ;;
         debian)
             # obtain sudo privileges upfront
