@@ -24,6 +24,11 @@ if [[ -d "$HOME/.docker/completions" ]]; then
     fpath=( "$HOME/.docker/completions" $fpath )
 fi
 
+if command -v mise &>/dev/null; then
+    eval "$(mise activate zsh)"
+fi
+
+
 # Zsh completions
 autoload -Uz compinit
 compinit
